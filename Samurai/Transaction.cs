@@ -20,6 +20,8 @@ namespace Samurai
         
         // ...
 
+        public PaymentMethod PaymentMethod { get; set; }
+
         public static Transaction Fetch(string purchaseReferenceId)
         {
             var request = new RestRequest();
