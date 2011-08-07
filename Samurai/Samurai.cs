@@ -10,7 +10,7 @@ namespace Samurai
     /// </summary>
     public static class Samurai
     {
-        public static readonly string DefaultSite = "https://samurai.feefighters.com/v1/";
+        public static readonly string DefaultSite = "https://api.ubergateway.com/v1/";
         public static readonly SamuraiOptions DefaultOptions = new SamuraiOptions() { Site = DefaultSite };
 
         private static SamuraiOptions _options = new SamuraiOptions();
@@ -26,6 +26,26 @@ namespace Samurai
                 _options = (value ?? new SamuraiOptions()).ReverseMerge(DefaultOptions);
                 // Samurai::Base.setup_site!
             }
+        }
+
+        public static string Site
+        {
+            get { return _options.Site; }
+        }
+
+        public static string MerchantKey
+        {
+            get { return _options.MerchantKey; }
+        }
+
+        public static string MerchantPassword
+        {
+            get { return _options.MerchantPassword; }
+        }
+
+        public static string ProcessorToken
+        {
+            get { return _options.ProcessorToken; }
         }
     }
 }
