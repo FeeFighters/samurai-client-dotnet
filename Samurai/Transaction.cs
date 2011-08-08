@@ -50,5 +50,23 @@ namespace Samurai
 
             return Execute<Transaction>(request);
         }
+
+        /// <summary>
+        /// Voids this transaction. If the transaction has not yet been captured and settled 
+        /// it can be voided to prevent any funds from transferring.
+        /// </summary>
+        /// <returns>Voided transaction.</returns>
+        public Transaction Void()
+        {
+            // Create request
+            var request = new RestRequest(Method.POST);
+            request.Resource = "transactions/{TransactionToken}/void.xml";
+            request.RootElement = "transaction";
+
+            // Set processor token
+            request.AddParameter("TransactionToken", TransactionToken, ParameterType.UrlSegment);
+
+            return Execute<Transaction>(request);
+        }
     }
 }
