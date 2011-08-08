@@ -13,7 +13,7 @@ namespace Samurai
         public static readonly string DefaultSite = "https://api.ubergateway.com/v1/";
         public static readonly SamuraiOptions DefaultOptions = new SamuraiOptions() { Site = DefaultSite };
 
-        private static SamuraiOptions _options = new SamuraiOptions();
+        private static SamuraiOptions _options = DefaultOptions;
 
         /// <summary>
         /// Gets or sets connection options.
