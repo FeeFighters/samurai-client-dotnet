@@ -41,5 +41,26 @@ namespace Samurai.Test
             Assert.AreEqual(pm.CardType, "visa", true);
             // write more...
         }
+
+        [TestMethod]
+        public void UpdateTest()
+        {
+            // fetch
+            var pm = PaymentMethod.Fetch("11162477aad1a7053b72dbd0");
+            string oldCustom = pm.Custom;
+
+            // updating
+            string newCustom = string.Format("Updated at {0}.", DateTime.UtcNow);
+            pm.Custom = newCustom;
+            pm.Update();
+
+            pm = PaymentMethod.Fetch("11162477aad1a7053b72dbd0");
+
+            // assert
+            Assert.IsNotNull(pm);
+            Assert.AreNotEqual(oldCustom, pm.Custom);
+            Assert.AreEqual(newCustom, pm.Custom);
+            Assert.IsTrue(pm.IsSensitiveDataValid);
+        }
     }
 }
