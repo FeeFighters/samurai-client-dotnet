@@ -16,7 +16,7 @@ namespace Samurai
         public bool IsRedacted { get; set; }
         public bool IsSensitiveDataValid { get; set; }
 
-        // ... messages
+        public List<Message> Messages { get; set; }
 
         public string LastFourDigits { get; set; }
         public string CardType { get; set; }

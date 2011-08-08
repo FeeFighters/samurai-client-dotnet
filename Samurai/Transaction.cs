@@ -17,8 +17,8 @@ namespace Samurai
         public decimal Amount { get; set; }
         public string CurrencyCode { get; set; }
         public string ProcessorToken { get; set; }
-        
-        // ...
+
+        public ProcessorResponse ProcessorResponse { get; set; }
 
         public PaymentMethod PaymentMethod { get; set; }
 
