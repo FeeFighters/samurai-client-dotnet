@@ -32,5 +32,23 @@ namespace Samurai
 
             return Execute<Transaction>(request);
         }
+
+        public Transaction Capture(string amount)
+        {
+            // Create request
+            var request = new RestRequest(Method.POST);
+            request.RequestFormat = DataFormat.Xml;
+            request.Resource = "transactions/{TransactionToken}/capture.xml";
+            request.RootElement = "transaction";
+
+            // generate payload
+            string payload = string.Format("<amount>{0}</amount>", amount);
+
+            // Set processor token
+            request.AddParameter("TransactionToken", TransactionToken, ParameterType.UrlSegment);
+            request.AddParameter("text/xml", payload, ParameterType.RequestBody);
+
+            return Execute<Transaction>(request);
+        }
     }
 }
