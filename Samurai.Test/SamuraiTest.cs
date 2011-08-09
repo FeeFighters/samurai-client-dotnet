@@ -49,6 +49,15 @@ namespace Samurai.Test
             Assert.AreEqual(Samurai.MerchantKey, options.MerchantKey);
             Assert.AreEqual(Samurai.MerchantPassword, options.MerchantPassword);
             Assert.AreEqual(Samurai.ProcessorToken, options.ProcessorToken);
-        }        
+        }
+
+        [TestMethod]
+        public void Samurai_Has_Aliases_For_Options()
+        {
+            Assert.AreEqual(Samurai.Options.MerchantKey, Samurai.MerchantKey);
+            Assert.AreEqual(Samurai.Options.MerchantPassword, Samurai.MerchantPassword);
+            Assert.AreEqual(Samurai.Options.ProcessorToken, Samurai.ProcessorToken);
+            Assert.AreEqual(Samurai.Options.Site, Samurai.Site);
+        }
     }
 }
