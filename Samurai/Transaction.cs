@@ -89,6 +89,22 @@ namespace Samurai
         /// capture of the initial authorization. The default is to capture the full 
         /// amount of the authorization.
         /// </summary>
+        /// <remarks>
+        /// If amount is not specefied Capture(string=null) method will be used.
+        /// </remarks>
+        /// <param name="amount">Amount of partial capture, specify only if needed.</param>
+        /// <returns>Captured transaction.</returns>
+        public Transaction Capture(decimal amount)
+        {
+            string amountString = Helper.DecimalToString(amount);
+            return Capture(amountString);
+        }
+
+        /// <summary>
+        /// Captures an authorization. Optionally specify an amount to do a partial 
+        /// capture of the initial authorization. The default is to capture the full 
+        /// amount of the authorization.
+        /// </summary>
         /// <param name="amount">Amount of partial capture, specify only if needed.</param>
         /// <returns>Captured transaction.</returns>
         public Transaction Capture(string amount=null)
