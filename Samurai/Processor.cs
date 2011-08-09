@@ -54,6 +54,9 @@ namespace Samurai
             return TheProcessor.Authorize(paymentMethodToken, amount, descriptor, custom, null, null);
         }
 
+        /// <summary>
+        /// Gets or sets processor token.
+        /// </summary>
         public string ProcessorToken { get; private set; }
 
         /// <summary>
@@ -62,6 +65,25 @@ namespace Samurai
         /// </summary>
         /// <param name="paymentMethodToken">Token identifying the payment method to authorize.</param>
         /// <param name="amount">Amount to authorize.</param>
+        /// <param name="descriptor">Descriptor for the transaction.</param>
+        /// <param name="custom">Custom data.</param>
+        /// <param name="customer_reference">An identifier for the customer, this will appear in the processor if supported.</param>
+        /// <param name="billing_reference">An identifier for the purchase, this will appear in the processor if supported.</param>
+        /// <returns>a transaction containing the processor's response.</returns>
+        public Transaction Purchase(string paymentMethodToken, decimal amount, string descriptor = null,
+            string custom = null, string customer_reference = null, string billing_reference = null)
+        {
+            string amountString = Helper.DecimalToString(amount);
+            return Purchase(paymentMethodToken, amountString, descriptor, custom, customer_reference,
+                billing_reference);
+        }
+
+        /// <summary>
+        /// Convenience method to authorize and capture a payment_method for a particular amount in one transaction.
+        /// It's a most generic form of this method.
+        /// </summary>
+        /// <param name="paymentMethodToken">Token identifying the payment method to authorize.</param>
+        /// <param name="amount">Amount to authorize. Should be in format like "12.00".</param>
         /// <param name="descriptor">Descriptor for the transaction.</param>
         /// <param name="custom">Custom data.</param>
         /// <param name="customer_reference">An identifier for the customer, this will appear in the processor if supported.</param>
@@ -101,6 +123,24 @@ namespace Samurai
         /// </summary>
         /// <param name="paymentMethodToken">Token identifying the payment method to authorize.</param>
         /// <param name="amount">Amount to authorize.</param>
+        /// <param name="descriptor">Descriptor for the transaction.</param>
+        /// <param name="custom">Custom data.</param>
+        /// <param name="customer_reference">An identifier for the customer, this will appear in the processor if supported.</param>
+        /// <param name="billing_reference">An identifier for the purchase, this will appear in the processor if supported.</param>
+        /// <returns>a transaction containing the processor's response.</returns>
+        public Transaction Authorize(string paymentMethodToken, decimal amount, string descriptor = null,
+            string custom = null, string customer_reference = null, string billing_reference = null)
+        {
+            string amountString = Helper.DecimalToString(amount);
+            return Authorize(paymentMethodToken, amountString, descriptor, custom, customer_reference,
+                billing_reference);
+        }
+
+        /// <summary>
+        /// Authorizes a payment_method for a particular amount. 
+        /// </summary>
+        /// <param name="paymentMethodToken">Token identifying the payment method to authorize.</param>
+        /// <param name="amount">Amount to authorize. Should be in format like "12.00".</param>
         /// <param name="descriptor">Descriptor for the transaction.</param>
         /// <param name="custom">Custom data.</param>
         /// <param name="customer_reference">An identifier for the customer, this will appear in the processor if supported.</param>
