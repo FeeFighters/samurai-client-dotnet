@@ -27,34 +27,6 @@ namespace Samurai
         }
 
         /// <summary>
-        /// Convenience method that calls the purchase method on the default processor.
-        /// </summary>
-        /// <param name="paymentMethodToken">Token identifying the payment method to authorize.</param>
-        /// <param name="amount">Amount to authorize.</param>
-        /// <param name="descriptor">Descriptor for the transaction.</param>
-        /// <param name="custom">Custom data.</param>
-        /// <returns>a transaction containing the processor's response.</returns>
-        public static Transaction Purchase(string paymentMethodToken, string amount, string descriptor = null,
-            string custom = null)
-        {
-            return TheProcessor.Purchase(paymentMethodToken, amount, descriptor, custom, null, null);
-        }
-
-        /// <summary>
-        /// Convenience method that calls the authorize method on the default processor.
-        /// </summary>
-        /// <param name="paymentMethodToken">Token identifying the payment method to authorize.</param>
-        /// <param name="amount">Amount to authorize.</param>
-        /// <param name="descriptor">Descriptor for the transaction.</param>
-        /// <param name="custom">Custom data.</param>
-        /// <returns>a transaction containing the processor's response.</returns>
-        public static Transaction Authorize(string paymentMethodToken, string amount, string descriptor = null,
-            string custom = null)
-        {
-            return TheProcessor.Authorize(paymentMethodToken, amount, descriptor, custom, null, null);
-        }
-
-        /// <summary>
         /// Gets or sets processor token.
         /// </summary>
         public string ProcessorToken { get; private set; }
