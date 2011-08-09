@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PaymentMethodTest.cs" />
+    <Compile Include="ProcessorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PurchaseTest.cs" />
     <Compile Include="SamuraiTest.cs" />
