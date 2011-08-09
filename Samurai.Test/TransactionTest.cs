@@ -32,7 +32,7 @@ namespace Samurai.Test
             Assert.AreEqual(t.Custom, string.Empty);
             //Assert.AreEqual(trans.BillingReference, string.Empty);
             //Assert.AreEqual(trans.CustomerReference, string.Empty);
-            Assert.AreEqual(t.TransactionType, "purchase", true);
+            Assert.AreEqual(TransactionType.Purchase, t.Type);
             Assert.AreEqual(t.Amount, 50);
             Assert.AreEqual(t.CurrencyCode, "US", true);
             Assert.AreEqual(t.ProcessorToken, "b0d9c4324dabd84975b0a5e1", true);

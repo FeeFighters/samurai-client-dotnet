@@ -41,6 +41,11 @@ namespace Samurai
         /// </summary>
         public string TransactionType { get; set; }
 
+        public TransactionType Type
+        {
+            get { return Helper.StringToTransactionType(TransactionType); }
+        }
+
         /// <summary>
         /// Gets or sets amount.
         /// </summary>

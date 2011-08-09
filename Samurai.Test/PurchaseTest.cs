@@ -92,7 +92,7 @@ namespace Samurai.Test
             var t = _processor.Authorize(_paymentMethodToken, amount, descriptor, custom);
 
             Assert.IsTrue(t.ProcessorResponse.Success);
-            Assert.AreEqual("authorize", t.TransactionType, true);
+            Assert.AreEqual(TransactionType.Authorize, t.Type);
             Assert.AreEqual(amount, t.Amount);
             Assert.AreEqual(descriptor, t.Descriptor);
             Assert.AreEqual(custom, t.Custom);

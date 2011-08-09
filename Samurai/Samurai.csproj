@@ -58,6 +58,7 @@
     <Compile Include="Transaction.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TransactionType.cs" />
     <Compile Include="XmlPayloads.cs" />
   </ItemGroup>
   <ItemGroup>
