@@ -60,12 +60,12 @@ namespace Samurai.Test
         }
 
         [TestMethod]
-        public void Simple_Purchase_17_USD_As_Int()
+        public void Simple_Purchase_2_USD_As_Int()
         {
-            var t = _processor.Purchase(_paymentMethodToken, 17);
+            var t = _processor.Purchase(_paymentMethodToken, 2);
 
             Assert.IsTrue(t.ProcessorResponse.Success);
-            Assert.AreEqual(17, t.Amount);
+            Assert.AreEqual(2, t.Amount);
         }
 
         [TestMethod]

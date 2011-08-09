@@ -27,7 +27,7 @@ namespace Samurai.Test
         }
 
         [TestMethod]
-        public void FetchTest()
+        public void Fetch_PaymentMethod_Test()
         {
             var pm = PaymentMethod.Fetch("11162477aad1a7053b72dbd0");
 
@@ -43,7 +43,7 @@ namespace Samurai.Test
         }
 
         [TestMethod]
-        public void UpdateTest()
+        public void Update_PaymentMethod_Test()
         {
             // fetch
             var pm = PaymentMethod.Fetch("11162477aad1a7053b72dbd0");

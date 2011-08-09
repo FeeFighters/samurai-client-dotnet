@@ -21,7 +21,7 @@ namespace Samurai.Test
         }
 
         [TestMethod]
-        public void FetchTest()
+        public void Fetch_Transaction_Test()
         {
             var t = Transaction.Fetch("7C07CBBEEA7676981F711994");
 
