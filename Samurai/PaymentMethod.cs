@@ -186,26 +186,29 @@ namespace Samurai
         /// <summary>
         /// Creates a brand new payment method with given parameters and returns its token.
         /// </summary>
-        /// <param name="firstName"></param>
-        /// <param name="lastName"></param>
-        /// <param name="city"></param>
-        /// <param name="state"></param>
-        /// <param name="zip"></param>
-        /// <param name="cardNumber"></param>
-        /// <param name="cardCVV"></param>
-        /// <param name="expMonth"></param>
-        /// <param name="expYear"></param>
-        /// <returns></returns>
+        /// <param name="firstName">First name.</param>
+        /// <param name="lastName">Last name.</param>
+        /// <param name="city">City.</param>
+        /// <param name="state">State.</param>
+        /// <param name="zip">Zip.</param>
+        /// <param name="cardNumber">Card number.</param>
+        /// <param name="cardCVV">Security code</param>
+        /// <param name="expMonth">Month of the expiration date.</param>
+        /// <param name="expYear">Year of the expiration date.</param>
+        /// <returns>token of a brand new payment method.</returns>
         public static string CreateNewPaymentMethodToken(string firstName, string lastName, string city, string state,
             string zip, string cardNumber, string cardCVV, string expMonth, string expYear, bool sandbox = true)
         {
+            // client for creating
             var client = new RestClient();
             client.BaseUrl = "https://samurai.feefighters.com/v1/";
             
+            // create post-request 
             var request = new RestRequest(Method.POST);
             request.Timeout = int.MaxValue;
             request.Resource = "payment_methods";
 
+            // it seems like for redirecting IIS should be installed
             request.AddParameter("redirect_url", "http://127.0.0.1:80");
             request.AddParameter("merchant_key", Samurai.MerchantKey);
 
@@ -227,54 +230,70 @@ namespace Samurai
                 request.AddParameter("sandbox", "true");
             }
 
+            // get response
             var response = client.Execute(request);
 
+            // get token from url
             return response.ResponseUri.Query.Split('=').Last();
         }
 
 
         /// <summary>
-        /// Creates a brand new payment method.
+        /// Creates a brand new payment method with given parameters.
         /// </summary>
-        /// <param name="firstName"></param>
-        /// <param name="lastName"></param>
-        /// <param name="city"></param>
-        /// <param name="state"></param>
-        /// <param name="zip"></param>
-        /// <param name="cardNumber"></param>
-        /// <param name="cardCVV"></param>
-        /// <param name="expMonth"></param>
-        /// <param name="expYear"></param>
-        /// <param name="sandbox"></param>
-        /// <returns></returns>
+        /// <param name="firstName">First name.</param>
+        /// <param name="lastName">Last name.</param>
+        /// <param name="city">City.</param>
+        /// <param name="state">State.</param>
+        /// <param name="zip">Zip.</param>
+        /// <param name="cardNumber">Card number.</param>
+        /// <param name="cardCVV">Security code</param>
+        /// <param name="expMonth">Month of the expiration date.</param>
+        /// <param name="expYear">Year of the expiration date.</param>
+        /// <returns>a brand new payment method.</returns>
         public static PaymentMethod Create(string firstName, string lastName, string city, string state,
             string zip, string cardNumber, string cardCVV, string expMonth, string expYear, bool sandbox = true)
         {
+            // create a payment method
             string pmToken = CreateNewPaymentMethodToken(firstName, lastName, city, state, zip,
                 cardNumber, cardCVV, expMonth, expYear, sandbox);
 
+            // fetch it ny its token
             PaymentMethod pm = PaymentMethod.Fetch(pmToken);
 
             return pm;
         }
 
+        /// <summary>
+        /// Redacts sensitive information from the payment method, rendering it unusable.
+        /// </summary>
+        /// <returns>reducted payment method.</returns>
         public PaymentMethod Redact()
         {
+            // create a request
             var request = new RestRequest(Method.POST);
             request.Resource = "payment_methods/{PaymentMethodToken}/redact.xml";
             request.RootElement = "payment_method";
 
+            // add token as an url parameter
             request.AddParameter("PaymentMethodToken", PaymentMethodToken, ParameterType.UrlSegment);
 
             return Execute<PaymentMethod>(request);
         }
 
+        /// <summary>
+        /// Retains the payment method on samurai.feefighters.com. Retain a payment method 
+        /// if it will not be used immediately. 
+        /// </summary>
+        /// <returns>retained payment method.</returns>
         public PaymentMethod Retain()
         {
+            // create a request
             var request = new RestRequest(Method.POST);
             request.Resource = "payment_methods/{PaymentMethodToken}/retain.xml";
             request.RootElement = "payment_method";
 
+            // add token as an url parameter
             request.AddParameter("PaymentMethodToken", PaymentMethodToken, ParameterType.UrlSegment);
 
             return Execute<PaymentMethod>(request);
