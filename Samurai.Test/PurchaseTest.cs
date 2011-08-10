@@ -178,6 +178,46 @@ namespace Samurai.Test
             Assert.AreEqual(amount, voidedPurchase.Amount);
         }
 
+        [TestMethod]
+        public void Purchase_With_Tracking_Data_Test()
+        {
+            var amount = 8.15m;
+            string billingRef = "ABC123";
+            string customerRef = "Customer (123)";
+
+            var purchase = _processor.Purchase(_paymentMethodToken, amount,
+                customer_reference: customerRef,
+                billing_reference: billingRef
+            );
+
+            Assert.IsNotNull(purchase);
+            Assert.IsTrue(purchase.ProcessorResponse.Success);
+            Assert.AreEqual(TransactionType.Purchase, purchase.Type);
+            Assert.AreEqual(amount, purchase.Amount);
+            Assert.AreEqual(billingRef, purchase.BillingReference);
+            Assert.AreEqual(customerRef, purchase.CustomerReference);
+        }
+
+        [TestMethod]
+        public void Authorize_With_Tracking_Data_Test()
+        {
+            var amount = 8.25m;
+            string billingRef = "ABC123";
+            string customerRef = "Customer (123)";
+
+            var authorization = _processor.Authorize(_paymentMethodToken, amount,
+                customer_reference: customerRef,
+                billing_reference: billingRef
+            );
+
+            Assert.IsNotNull(authorization);
+            Assert.IsTrue(authorization.ProcessorResponse.Success);
+            Assert.AreEqual(TransactionType.Authorize, authorization.Type);
+            Assert.AreEqual(amount, authorization.Amount);
+            Assert.AreEqual(billingRef, authorization.BillingReference);
+            Assert.AreEqual(customerRef, authorization.CustomerReference);
+        }
+
         // [TestMethod]
         // public void ShouldNot_Be_Able_To_Credit_Recent_Purchase_Test()
         // {

@@ -37,6 +37,16 @@ namespace Samurai
         public string Custom { get; set; }
 
         /// <summary>
+        /// Gets or sets descriptor.
+        /// </summary>
+        public string BillingReference { get; set; }
+
+        /// <summary>
+        /// Gets or sets custom data.
+        /// </summary>
+        public string CustomerReference { get; set; }
+
+        /// <summary>
         /// Gets or sets transaction type.
         /// </summary>
         public string TransactionType { get; set; }
