@@ -62,5 +62,50 @@ namespace Samurai.Test
             Assert.AreEqual(newCustom, pm.Custom);
             Assert.IsTrue(pm.IsSensitiveDataValid);
         }
+
+        [TestMethod]
+        public void Create_Then_Redact_PaymentMethod_Test()
+        {
+            // create new
+            var newPM = TestHelper.CreateScoobyDoPaymentMethod();
+
+            Assert.IsTrue(newPM.IsSensitiveDataValid);
+            Assert.IsFalse(newPM.IsRetained);
+            Assert.IsFalse(newPM.IsRedacted);
+
+            // redact
+            var redactedPM = newPM.Redact();
+
+            Assert.IsTrue(redactedPM.IsRedacted);
+            Assert.IsTrue(redactedPM.IsSensitiveDataValid);
+            Assert.IsFalse(newPM.IsRetained);
+        }
+
+        [TestMethod]
+        public void Create_Then_Retain_Then_Redact_PaymentMethod_Test()
+        {
+            // create new
+            var newPM = TestHelper.CreateScoobyDoPaymentMethod();
+
+            Assert.IsTrue(newPM.IsSensitiveDataValid);
+            Assert.IsFalse(newPM.IsRetained);
+            Assert.IsFalse(newPM.IsRedacted);
+
+            // redact
+            var retainedPM = newPM.Retain();
+
+            Assert.IsTrue(retainedPM.IsSensitiveDataValid);
+            Assert.IsTrue(retainedPM.IsRetained);
+            Assert.IsFalse(retainedPM.IsRedacted);
+
+            // simple purchase
+            var redactedPM = retainedPM.Redact();
+
+            Assert.IsTrue(redactedPM.IsSensitiveDataValid);
+            Assert.IsTrue(redactedPM.IsRetained);
+            Assert.IsTrue(redactedPM.IsRedacted);
+        }
+
+        
     }
 }

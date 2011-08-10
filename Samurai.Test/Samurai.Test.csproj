@@ -62,6 +62,7 @@
     <Compile Include="PurchaseTest.cs" />
     <Compile Include="SamuraiOptionsTest.cs" />
     <Compile Include="SamuraiTest.cs" />
+    <Compile Include="TestHelper.cs" />
     <Compile Include="TransactionTest.cs" />
   </ItemGroup>
   <ItemGroup>
