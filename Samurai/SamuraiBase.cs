@@ -25,5 +25,16 @@ namespace Samurai
 
             return ds.Deserialize<T>(response);
         }
+
+        public static RestResponse Execute(RestRequest request)
+        {
+            // set up client
+            var client = new RestClient();
+            client.BaseUrl = Samurai.Site;
+            //client.Authenticator = new HttpBasicAuthenticator(Samurai.MerchantKey, Samurai.MerchantPassword);
+
+            // return response
+            return client.Execute(request);
+        }
     }
 }
