@@ -182,5 +182,102 @@ namespace Samurai
 
             return Execute<PaymentMethod>(request);
         }
+
+        /// <summary>
+        /// Creates a brand new payment method with given parameters and returns its token.
+        /// </summary>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="city"></param>
+        /// <param name="state"></param>
+        /// <param name="zip"></param>
+        /// <param name="cardNumber"></param>
+        /// <param name="cardCVV"></param>
+        /// <param name="expMonth"></param>
+        /// <param name="expYear"></param>
+        /// <returns></returns>
+        public static string CreateNewPaymentMethodToken(string firstName, string lastName, string city, string state,
+            string zip, string cardNumber, string cardCVV, string expMonth, string expYear, bool sandbox = true)
+        {
+            var client = new RestClient();
+            client.BaseUrl = "https://samurai.feefighters.com/v1/";
+            
+            var request = new RestRequest(Method.POST);
+            request.Timeout = int.MaxValue;
+            request.Resource = "payment_methods";
+
+            request.AddParameter("redirect_url", "http://127.0.0.1:80");
+            request.AddParameter("merchant_key", Samurai.MerchantKey);
+
+            request.AddParameter("credit_card[first_name]", firstName);
+            request.AddParameter("custom", "");
+            request.AddParameter("credit_card[last_name]", lastName);
+            
+            request.AddParameter("credit_card[city]", city);
+            request.AddParameter("credit_card[state]", state);
+            request.AddParameter("credit_card[zip]", zip);
+            
+            request.AddParameter("credit_card[card_number]", cardNumber);
+            request.AddParameter("credit_card[cvv]", cardCVV);
+            request.AddParameter("credit_card[expiry_month]", expMonth);
+            request.AddParameter("credit_card[expiry_year]", expYear);
+            
+            if (sandbox)
+            {
+                request.AddParameter("sandbox", "true");
+            }
+
+            var response = client.Execute(request);
+
+            return response.ResponseUri.Query.Split('=').Last();
+        }
+
+
+        /// <summary>
+        /// Creates a brand new payment method.
+        /// </summary>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="city"></param>
+        /// <param name="state"></param>
+        /// <param name="zip"></param>
+        /// <param name="cardNumber"></param>
+        /// <param name="cardCVV"></param>
+        /// <param name="expMonth"></param>
+        /// <param name="expYear"></param>
+        /// <param name="sandbox"></param>
+        /// <returns></returns>
+        public static PaymentMethod Create(string firstName, string lastName, string city, string state,
+            string zip, string cardNumber, string cardCVV, string expMonth, string expYear, bool sandbox = true)
+        {
+            string pmToken = CreateNewPaymentMethodToken(firstName, lastName, city, state, zip,
+                cardNumber, cardCVV, expMonth, expYear, sandbox);
+
+            PaymentMethod pm = PaymentMethod.Fetch(pmToken);
+
+            return pm;
+        }
+
+        public PaymentMethod Redact()
+        {
+            var request = new RestRequest(Method.POST);
+            request.Resource = "payment_methods/{PaymentMethodToken}/redact.xml";
+            request.RootElement = "payment_method";
+
+            request.AddParameter("PaymentMethodToken", PaymentMethodToken, ParameterType.UrlSegment);
+
+            return Execute<PaymentMethod>(request);
+        }
+
+        public PaymentMethod Retain()
+        {
+            var request = new RestRequest(Method.POST);
+            request.Resource = "payment_methods/{PaymentMethodToken}/retain.xml";
+            request.RootElement = "payment_method";
+
+            request.AddParameter("PaymentMethodToken", PaymentMethodToken, ParameterType.UrlSegment);
+
+            return Execute<PaymentMethod>(request);
+        }
     }
 }
