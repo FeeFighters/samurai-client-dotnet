@@ -218,16 +218,16 @@ namespace Samurai.Test
             Assert.AreEqual(customerRef, authorization.CustomerReference);
         }
 
-        // [TestMethod]
-        // public void ShouldNot_Be_Able_To_Credit_Recent_Purchase_Test()
-        // {
-        //     var amount = 7.35m;
-        // 
-        //     var purchase = _processor.Purchase(_paymentMethodToken, amount);
-        //     var creditedPurchase = purchase.Credit();
-        // 
-        //     Assert.IsFalse(creditedPurchase.ProcessorResponse.Success);
-        //     Assert.AreEqual(TransactionType.Credit, creditedPurchase.Type);
-        // }
+        [TestMethod]
+        public void ShouldNot_Be_Able_To_Credit_Recent_Purchase_Test()
+        {
+            var amount = 7.35m;
+
+            var purchase = _processor.Purchase(_paymentMethodToken, amount);
+            var creditedPurchase = purchase.Credit();
+
+            Assert.IsFalse(creditedPurchase.ProcessorResponse.Success);
+            Assert.AreEqual(TransactionType.Credit, creditedPurchase.Type);
+        }
     }
 }
