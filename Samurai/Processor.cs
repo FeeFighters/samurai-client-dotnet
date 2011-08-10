@@ -7,6 +7,9 @@ using System.Xml.Linq;
 
 namespace Samurai
 {
+    /// <summary>
+    /// Represents processor.
+    /// </summary>
     public class Processor : SamuraiBase
     {
         /// <summary>

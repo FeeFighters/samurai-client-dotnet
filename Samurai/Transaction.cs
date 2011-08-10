@@ -51,6 +51,9 @@ namespace Samurai
         /// </summary>
         public string TransactionType { get; set; }
 
+        /// <summary>
+        /// Gets type of transaction as TransactionType enum.
+        /// </summary>
         public TransactionType Type
         {
             get { return Helper.StringToTransactionType(TransactionType); }
