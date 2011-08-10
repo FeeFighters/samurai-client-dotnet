@@ -14,6 +14,7 @@ namespace Samurai.Test
         {
             var theProcessor = Processor.TheProcessor;
 
+            Assert.IsNotNull(theProcessor);
             Assert.AreEqual(Samurai.ProcessorToken, theProcessor.ProcessorToken);
         }
 
@@ -22,6 +23,7 @@ namespace Samurai.Test
         {
             var processor = new Processor("asdf");
 
+            Assert.IsNotNull(processor);
             Assert.AreEqual("asdf", processor.ProcessorToken);
         }
     }

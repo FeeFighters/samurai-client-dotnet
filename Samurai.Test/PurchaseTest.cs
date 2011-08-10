@@ -47,6 +47,7 @@ namespace Samurai.Test
             var t = _processor.Purchase(_paymentMethodToken, "17.00");
 
             Assert.IsTrue(t.ProcessorResponse.Success);
+            Assert.AreEqual(TransactionType.Purchase, t.Type);
             Assert.AreEqual(17, t.Amount);
         }
 
@@ -56,6 +57,7 @@ namespace Samurai.Test
             var t = _processor.Purchase(_paymentMethodToken, 17.25m);
 
             Assert.IsTrue(t.ProcessorResponse.Success);
+            Assert.AreEqual(TransactionType.Purchase, t.Type);
             Assert.AreEqual(17.25m, t.Amount);
         }
 
@@ -65,6 +67,7 @@ namespace Samurai.Test
             var t = _processor.Purchase(_paymentMethodToken, 2);
 
             Assert.IsTrue(t.ProcessorResponse.Success);
+            Assert.AreEqual(TransactionType.Purchase, t.Type);
             Assert.AreEqual(2, t.Amount);
         }
 
@@ -77,6 +80,7 @@ namespace Samurai.Test
             var t = _processor.Purchase(_paymentMethodToken, 18.75m, descriptor, custom);
 
             Assert.IsTrue(t.ProcessorResponse.Success);
+            Assert.AreEqual(TransactionType.Purchase, t.Type);
             Assert.AreEqual(18.75m, t.Amount);
             Assert.AreEqual(descriptor, t.Descriptor);
             Assert.AreEqual(custom, t.Custom);
@@ -97,5 +101,93 @@ namespace Samurai.Test
             Assert.AreEqual(descriptor, t.Descriptor);
             Assert.AreEqual(custom, t.Custom);
         }
+
+        [TestMethod]
+        public void Find_Authorization_Test()
+        {
+            var authorization = _processor.Authorize(_paymentMethodToken, 2);
+            var transaction = Transaction.Fetch(authorization.ReferenceId);
+
+            Assert.AreEqual(authorization.ReferenceId, transaction.ReferenceId);
+            Assert.AreEqual(TransactionType.Authorize, authorization.Type);
+        }
+
+        [TestMethod]
+        public void Capture_Authorization_Test()
+        {
+            var amount = 3m;
+
+            var authorization = _processor.Authorize(_paymentMethodToken, amount);
+            var capturedTr = authorization.Capture(amount);
+
+            Assert.AreEqual(amount, capturedTr.Amount);
+            Assert.AreEqual(TransactionType.Capture, capturedTr.Type);
+            Assert.IsTrue(capturedTr.ProcessorResponse.Success);
+        }
+
+        [TestMethod]
+        public void Capture_Authorization_Without_Specifying_Amount_Test()
+        {
+            var amount = 5m;
+
+            var authorization = _processor.Authorize(_paymentMethodToken, amount);
+            var capturedTr = authorization.Capture();
+
+            Assert.AreEqual(amount, capturedTr.Amount);
+            Assert.AreEqual(TransactionType.Capture, capturedTr.Type);
+            Assert.IsTrue(capturedTr.ProcessorResponse.Success);
+        }
+
+        [TestMethod]
+        public void Partially_Capture_Authorization_Test()
+        {
+            var authAmount = 4m;
+            var captAmount = 2.5m;
+
+            var authorization = _processor.Authorize(_paymentMethodToken, authAmount);
+            var capturedTr = authorization.Capture(captAmount);
+
+            Assert.AreEqual(captAmount, capturedTr.Amount);
+            Assert.AreEqual(TransactionType.Capture, capturedTr.Type);
+            Assert.IsTrue(capturedTr.ProcessorResponse.Success);
+        }
+
+        [TestMethod]
+        public void Void_Authorization_Test()
+        {
+            var amount = 6.75m;
+
+            var authorization = _processor.Authorize(_paymentMethodToken, amount);
+            var voidedAuth = authorization.Void();
+
+            Assert.IsTrue(voidedAuth.ProcessorResponse.Success);
+            Assert.AreEqual(TransactionType.Void, voidedAuth.Type);
+            Assert.AreEqual(amount, voidedAuth.Amount);
+        }
+
+        [TestMethod]
+        public void Void_Recent_Purchase_Test()
+        {
+            var amount = 7m;
+
+            var purchase = _processor.Purchase(_paymentMethodToken, amount);
+            var voidedPurchase = purchase.Void();
+
+            Assert.IsTrue(voidedPurchase.ProcessorResponse.Success);
+            Assert.AreEqual(TransactionType.Void, voidedPurchase.Type);
+            Assert.AreEqual(amount, voidedPurchase.Amount);
+        }
+
+        // [TestMethod]
+        // public void ShouldNot_Be_Able_To_Credit_Recent_Purchase_Test()
+        // {
+        //     var amount = 7.35m;
+        // 
+        //     var purchase = _processor.Purchase(_paymentMethodToken, amount);
+        //     var creditedPurchase = purchase.Credit();
+        // 
+        //     Assert.IsFalse(creditedPurchase.ProcessorResponse.Success);
+        //     Assert.AreEqual(TransactionType.Credit, creditedPurchase.Type);
+        // }
     }
 }
