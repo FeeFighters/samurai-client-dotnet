@@ -65,7 +65,7 @@ namespace Samurai
         /// <param name="billing_reference">An identifier for the purchase, this will appear in the processor if supported.</param>
         /// <returns>a transaction containing the processor's response.</returns>
         public Transaction Purchase(string paymentMethodToken, string amount, string descriptor = null,
-            string custom = null, string customer_reference = null, string billing_reference = null)
+            string custom = null, string customer_reference = null, string billing_reference = null, string currencyCode = "USD")
         {
             // create request
             var request = new RestRequest(Method.POST);
@@ -81,7 +81,7 @@ namespace Samurai
             {
                 Type = "purchase",
                 Amount = amount,
-                CurrencyCode = "USD",
+                CurrencyCode = currencyCode,
                 PaymentMethodToken = paymentMethodToken,
                 Descriptor = descriptor ?? string.Empty,
                 Custom = custom ?? string.Empty,
@@ -104,7 +104,7 @@ namespace Samurai
         /// <param name="billing_reference">An identifier for the purchase, this will appear in the processor if supported.</param>
         /// <returns>a transaction containing the processor's response.</returns>
         public Transaction Authorize(string paymentMethodToken, decimal amount, string descriptor = null,
-            string custom = null, string customer_reference = null, string billing_reference = null)
+            string custom = null, string customer_reference = null, string billing_reference = null, string currencyCode = "USD")
         {
             string amountString = Helper.DecimalToString(amount);
             return Authorize(paymentMethodToken, amountString, descriptor, custom, customer_reference,
@@ -122,7 +122,7 @@ namespace Samurai
         /// <param name="billing_reference">An identifier for the purchase, this will appear in the processor if supported.</param>
         /// <returns>a transaction containing the processor's response.</returns>
         public Transaction Authorize(string paymentMethodToken, string amount, string descriptor = null,
-            string custom = null, string customer_reference = null, string billing_reference = null)
+            string custom = null, string customer_reference = null, string billing_reference = null, string currencyCode = "USD")
         {
             // create request
             var request = new RestRequest(Method.POST);
@@ -138,7 +138,7 @@ namespace Samurai
             {
                 Type = "authorize",
                 Amount = amount,
-                CurrencyCode = "USD",
+                CurrencyCode = currencyCode,
                 PaymentMethodToken = paymentMethodToken,
                 Descriptor = descriptor ?? string.Empty,
                 Custom = custom ?? string.Empty,
