@@ -21,11 +21,7 @@ namespace Samurai
         public static SamuraiOptions Options
         {
             get { return _options; }
-            set
-            {
-                _options = (value ?? new SamuraiOptions()).ReverseMerge(DefaultOptions);
-                // Samurai::Base.setup_site!
-            }
+            set { _options = (value ?? new SamuraiOptions()).ReverseMerge(DefaultOptions); }
         }
 
         /// <summary>

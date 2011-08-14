@@ -8,6 +8,12 @@ namespace Samurai
 {
     public class SamuraiBase
     {
+        /// <summary>
+        /// Executes request and returns parsed object.
+        /// </summary>
+        /// <typeparam name="T">Type of object to return.</typeparam>
+        /// <param name="request">Request.</param>
+        /// <returns>a parsed object.</returns>
         public static T Execute<T>(RestRequest request) where T : new()
         {
             // set up client
@@ -26,6 +32,11 @@ namespace Samurai
             return ds.Deserialize<T>(response);
         }
 
+        /// <summary>
+        /// Executes request and returns response.
+        /// </summary>
+        /// <param name="request">Request.</param>
+        /// <returns>a response.</returns>
         public static RestResponse Execute(RestRequest request)
         {
             // set up client
