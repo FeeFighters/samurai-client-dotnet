@@ -197,11 +197,11 @@ namespace Samurai
         /// <param name="expYear">Year of the expiration date.</param>
         /// <returns>token of a brand new payment method.</returns>
         public static string CreateNewPaymentMethodToken(string firstName, string lastName, string city, string state,
-            string zip, string cardNumber, string cardCVV, string expMonth, string expYear, bool sandbox = true)
+            string zip, string cardNumber, string cardCVV, string expMonth, string expYear, bool sandbox = true, string redirect_url = null)
         {
             // client for creating
             var client = new RestClient();
-            client.BaseUrl = "https://samurai.feefighters.com/v1/";
+            client.BaseUrl = Samurai.Site; //"https://samurai.feefighters.com/v1/";
             
             // create post-request 
             var request = new RestRequest(Method.POST);
@@ -209,7 +209,7 @@ namespace Samurai
             request.Resource = "payment_methods";
 
             // it seems like for redirecting IIS should be installed
-            request.AddParameter("redirect_url", "http://127.0.0.1:80");
+            request.AddParameter("redirect_url", string.IsNullOrWhiteSpace(redirect_url) ? "http://127.0.0.1:80" : redirect_url);
             request.AddParameter("merchant_key", Samurai.MerchantKey);
 
             request.AddParameter("credit_card[first_name]", firstName);
