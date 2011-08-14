@@ -42,8 +42,8 @@ Application_Start() method so this method should be something like this (for MVC
 	}
 
 The ProcessorToken property is optional. If you set it,
-`Samurai.Processor.TheProcessor` will return the processor with this token. You
-can always call `new Samurai.Processor("an_arbitrary_processor_token")` to
+`Processor.TheProcessor` will return the processor with this token. You
+can always call `new Processor("an_arbitrary_processor_token")` to
 retrieve any of your processors.
 
 Payment Methods
@@ -62,7 +62,7 @@ entry form on your site like the one below.
         <input name="redirect_url" type="hidden" value="http://yourdomain.com/anywhere" />
         <input name="merchant_key" type="hidden" value="[Your Merchant Key]" />
 
-        <!-- Before populating the ‘custom’ parameter, remember to escape reserved xml characters 
+        <!-- Before populating the 'custom' parameter, remember to escape reserved xml characters 
              like <, > and & into their safe counterparts like &lt;, &gt; and &amp; -->
         <input name="custom" type="hidden" value="Any value you want us to save with this payment method" />
 
