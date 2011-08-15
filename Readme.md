@@ -8,7 +8,11 @@ process transactions.
 Installation
 ------------
 
-Just download source  code and compile Samurai project then add Samurai.dll to your project references.
+Just use NuGet to install Samurai-Client-DotNet:
+
+	Install-Package Samurai
+
+Or you can download source code and compile Samurai project then add Samurai.dll to your project references.
 If you want to move Samurai.dll also move RestSharp.dll and Newtonsoft.Json.dll.
 
 Configuration
