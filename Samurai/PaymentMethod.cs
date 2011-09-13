@@ -201,7 +201,7 @@ namespace Samurai
         {
             // client for creating
             var client = new RestClient();
-            client.BaseUrl = Samurai.Site; //"https://samurai.feefighters.com/v1/";
+            client.BaseUrl = Samurai.Site; //"https://api.samurai.feefighters.com/v1/";
             
             // create post-request 
             var request = new RestRequest(Method.POST);
@@ -282,7 +282,7 @@ namespace Samurai
         }
 
         /// <summary>
-        /// Retains the payment method on samurai.feefighters.com. Retain a payment method 
+        /// Retains the payment method on api.samurai.feefighters.com. Retain a payment method 
         /// if it will not be used immediately. 
         /// </summary>
         /// <returns>retained payment method.</returns>

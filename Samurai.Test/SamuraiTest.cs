@@ -26,7 +26,7 @@ namespace Samurai.Test
         {
             Assert.IsNotNull(Samurai.Options);
             Assert.IsNotNull(Samurai.Site);
-            Assert.AreEqual(Samurai.Site, "https://api.ubergateway.com/v1/");
+            Assert.AreEqual(Samurai.Site, "https://api.samurai.feefighters.com/v1/");
 
             Assert.IsNull(Samurai.MerchantKey);
             Assert.IsNull(Samurai.MerchantPassword);
@@ -45,7 +45,7 @@ namespace Samurai.Test
 
             Samurai.Options = options;
 
-            Assert.AreEqual(Samurai.Site, "https://api.ubergateway.com/v1/");
+            Assert.AreEqual(Samurai.Site, "https://api.samurai.feefighters.com/v1/");
             Assert.AreEqual(Samurai.MerchantKey, options.MerchantKey);
             Assert.AreEqual(Samurai.MerchantPassword, options.MerchantPassword);
             Assert.AreEqual(Samurai.ProcessorToken, options.ProcessorToken);

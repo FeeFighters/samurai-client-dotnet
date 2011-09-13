@@ -46,7 +46,7 @@ namespace Samurai
 
         /// <summary>
         /// Gets or sets custom data, this data does not get passed to the processor, 
-        /// it is stored within samurai.feefighters.com only.
+        /// it is stored within api.samurai.feefighters.com only.
         /// </summary>
         [SerializeAs(Name = "custom")]
         public string Custom { get; set; }

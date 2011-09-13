@@ -10,7 +10,7 @@ namespace Samurai
     /// </summary>
     public static class Samurai
     {
-        public static readonly string DefaultSite = "https://api.ubergateway.com/v1/";
+        public static readonly string DefaultSite = "https://api.samurai.feefighters.com/v1/";
         public static readonly SamuraiOptions DefaultOptions = new SamuraiOptions() { Site = DefaultSite };
 
         private static SamuraiOptions _options = DefaultOptions;
