@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samurai.Mono", "Samurai\Samurai.Mono.csproj", "{975E29C6-8DEF-426D-BF94-AFE5DFDCC418}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{19EDE2DF-0342-47E2-A43B-A7943CB4BE2D}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		Samurai-Client-Dot-Net.vsmdi = Samurai-Client-Dot-Net.vsmdi
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samurai.NUnitTest", "Samurai.NUnitTest\Samurai.NUnitTest.csproj", "{1EB08ED7-BD0F-4EC2-8DF5-8AC67570A460}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1EB08ED7-BD0F-4EC2-8DF5-8AC67570A460}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EB08ED7-BD0F-4EC2-8DF5-8AC67570A460}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EB08ED7-BD0F-4EC2-8DF5-8AC67570A460}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1EB08ED7-BD0F-4EC2-8DF5-8AC67570A460}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1EB08ED7-BD0F-4EC2-8DF5-8AC67570A460}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1EB08ED7-BD0F-4EC2-8DF5-8AC67570A460}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EB08ED7-BD0F-4EC2-8DF5-8AC67570A460}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EB08ED7-BD0F-4EC2-8DF5-8AC67570A460}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1EB08ED7-BD0F-4EC2-8DF5-8AC67570A460}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1EB08ED7-BD0F-4EC2-8DF5-8AC67570A460}.Release|x86.ActiveCfg = Release|Any CPU
+		{975E29C6-8DEF-426D-BF94-AFE5DFDCC418}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{975E29C6-8DEF-426D-BF94-AFE5DFDCC418}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{975E29C6-8DEF-426D-BF94-AFE5DFDCC418}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{975E29C6-8DEF-426D-BF94-AFE5DFDCC418}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{975E29C6-8DEF-426D-BF94-AFE5DFDCC418}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{975E29C6-8DEF-426D-BF94-AFE5DFDCC418}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{975E29C6-8DEF-426D-BF94-AFE5DFDCC418}.Release|Any CPU.Build.0 = Release|Any CPU
+		{975E29C6-8DEF-426D-BF94-AFE5DFDCC418}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{975E29C6-8DEF-426D-BF94-AFE5DFDCC418}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{975E29C6-8DEF-426D-BF94-AFE5DFDCC418}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Samurai\Samurai.Mono.csproj
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Samurai-Client-Dot-Net.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

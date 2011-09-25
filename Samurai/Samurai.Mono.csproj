@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1EB08ED7-BD0F-4EC2-8DF5-8AC67570A460}</ProjectGuid>
+    <ProjectGuid>{975E29C6-8DEF-426D-BF94-AFE5DFDCC418}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Samurai.NUnitTest</RootNamespace>
-    <AssemblyName>Samurai.NUnitTest</AssemblyName>
+    <RootNamespace>Samurai</RootNamespace>
+    <AssemblyName>Samurai</AssemblyName>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Samurai.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,14 +29,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Samurai.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit-2.5.10.11092\bin\net-2.0\framework\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.mocks">
-      <HintPath>..\packages\NUnit-2.5.10.11092\bin\net-2.0\framework\nunit.mocks.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,22 +39,31 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.0.2\lib\mono\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp-4b40ec21c292169ab6947a0e12ded32d42264a15\lib\mono\RestSharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PaymentMethodTest.cs" />
-    <Compile Include="ProcessorTest.cs" />
+    <Compile Include="Helper.cs" />
+    <Compile Include="Message.cs" />
+    <Compile Include="PaymentMethod.cs" />
+    <Compile Include="Processor.cs" />
+    <Compile Include="ProcessorResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PurchaseTest.cs" />
-    <Compile Include="SamuraiOptionsTest.cs" />
-    <Compile Include="SamuraiTest.cs" />
-    <Compile Include="TestHelper.cs" />
-    <Compile Include="TransactionTest.cs" />
+    <Compile Include="Samurai.cs" />
+    <Compile Include="SamuraiBase.cs" />
+    <Compile Include="SamuraiOptions.cs" />
+    <Compile Include="Transaction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransactionType.cs" />
+    <Compile Include="XmlPayloads.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Samurai\Samurai.Mono.csproj">
-      <Project>{975E29C6-8DEF-426D-BF94-AFE5DFDCC418}</Project>
-      <Name>Samurai.Mono</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
