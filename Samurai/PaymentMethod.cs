@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using RestSharp;
 using System.Xml.Linq;
+using System.Text.RegularExpressions;
 
 namespace Samurai
 {
@@ -234,7 +235,8 @@ namespace Samurai
             var response = client.Execute(request);
 
             // get token from url
-            return response.ResponseUri.Query.Split('=').Last();
+            var match = Regex.Match(response.Content, "\"payment_method_token\":\\s*\"(\\w+)\"", RegexOptions.IgnoreCase);
+            return match.Groups[1].ToString();
         }
 
 

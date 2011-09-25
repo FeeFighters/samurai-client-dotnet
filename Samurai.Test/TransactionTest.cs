@@ -28,10 +28,10 @@ namespace Samurai.Test
             Assert.AreEqual(t.TransactionToken, "3bfde5b1e79aaef7fb1b6012", true);
             Assert.AreEqual(t.ReferenceId, "7c07cbbeea7676981f711994", true);
             Assert.AreEqual(t.CreatedAt, new DateTime(2011, 8, 7, 3, 19, 46, DateTimeKind.Utc));
-            Assert.AreEqual(t.Descriptor, string.Empty);
-            Assert.AreEqual(t.Custom, string.Empty);
-            //Assert.AreEqual(trans.BillingReference, string.Empty);
-            //Assert.AreEqual(trans.CustomerReference, string.Empty);
+            Assert.AreEqual(t.Descriptor, String.Empty);
+            Assert.AreEqual(t.Custom, String.Empty);
+            Assert.AreEqual(t.BillingReference, String.Empty);
+            Assert.AreEqual(t.CustomerReference, String.Empty);
             Assert.AreEqual(TransactionType.Purchase, t.Type);
             Assert.AreEqual(t.Amount, 50);
             Assert.AreEqual(t.CurrencyCode, "US", true);
