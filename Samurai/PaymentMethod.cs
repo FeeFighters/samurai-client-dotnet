@@ -196,6 +196,8 @@ namespace Samurai
         /// <param name="cardCVV">Security code</param>
         /// <param name="expMonth">Month of the expiration date.</param>
         /// <param name="expYear">Year of the expiration date.</param>
+        /// <param name="sandbox">Sandbox payment method flag (sandbox PMs can only be used with Sandbox Processors)</param>
+        /// <param name="redirect_url">Url to redirect to from transparent redirect</param>
         /// <returns>token of a brand new payment method.</returns>
         public static string CreateNewPaymentMethodToken(string firstName, string lastName, string city, string state,
             string zip, string cardNumber, string cardCVV, string expMonth, string expYear, bool sandbox = true, string redirect_url = null)
