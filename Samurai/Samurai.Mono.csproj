@@ -39,11 +39,11 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.0.2\lib\mono\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp-4b40ec21c292169ab6947a0e12ded32d42264a15\lib\mono\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.0.2.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Newtonsoft.Json.4.0.2\lib\mono\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
