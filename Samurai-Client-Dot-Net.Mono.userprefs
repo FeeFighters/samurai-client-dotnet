@@ -1,13 +1,17 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Samurai/SamuraiBase.cs">
+    <Files>
+      <File FileName="Samurai/SamuraiBase.cs" Line="27" Column="5" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Solution Items" expanded="True" />
           <Node name="Samurai.Mono" expanded="True">
-            <Node name="References" expanded="True" selected="True" />
+            <Node name="References" expanded="True" />
             <Node name="Properties" expanded="True" />
+            <Node name="SamuraiBase.cs" selected="True" />
           </Node>
           <Node name="Samurai.NUnitTest" expanded="True">
             <Node name="References" expanded="True" />

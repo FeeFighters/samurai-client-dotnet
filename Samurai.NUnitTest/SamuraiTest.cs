@@ -38,9 +38,9 @@ namespace Samurai.NUnitTest
         {
             var options = new SamuraiOptions()
             {
-                MerchantKey = "c55b9694bc164fe518dd7aab",
-                MerchantPassword = "cde50d5324038ddc69415050",
-                ProcessorToken = "b0d9c4324dabd84975b0a5e1"
+                MerchantKey = "a1ebafb6da5238fb8a3ac9f6",
+                MerchantPassword = "ae1aa640f6b735c4730fbb56",
+                ProcessorToken = "69ac9c704329bb067d427bf0"
             };
 
             Samurai.Options = options;
