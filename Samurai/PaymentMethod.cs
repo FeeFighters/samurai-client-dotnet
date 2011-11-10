@@ -59,6 +59,16 @@ namespace Samurai
         public string LastFourDigits { get; set; }
 
         /// <summary>
+        /// Gets or sets last four digits of associated card number.
+        /// </summary>
+        public string CardNumber { get; set; }
+
+        /// <summary>
+        /// Gets or sets last four digits of associated card number.
+        /// </summary>
+        public string Cvv { get; set; }
+
+        /// <summary>
         /// Gets or sets card type of associated card.
         /// </summary>
         public string CardType { get; set; }
@@ -209,8 +219,9 @@ namespace Samurai
             // create post-request 
             var request = new RestRequest(Method.POST);
             request.Timeout = int.MaxValue;
-            request.Resource = "payment_methods";
-
+            request.Resource = "payment_methods/tokenize";
+			request.AddParameter("Accept", "application/json", ParameterType.HttpHeader);
+			
             // it seems like for redirecting IIS should be installed
             request.AddParameter("redirect_url", string.IsNullOrWhiteSpace(redirect_url) ? "http://127.0.0.1:80" : redirect_url);
             request.AddParameter("merchant_key", Samurai.MerchantKey);

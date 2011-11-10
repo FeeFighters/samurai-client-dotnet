@@ -9,6 +9,9 @@ namespace Samurai.NUnitTest
     [TestFixture]
     public class TransactionTest
     {
+        private Processor _processor;
+        private string _paymentMethodToken;		
+		
         [SetUp]
         public void TestInitialize()
         {
@@ -16,26 +19,28 @@ namespace Samurai.NUnitTest
             {
                 MerchantKey = "a1ebafb6da5238fb8a3ac9f6",
                 MerchantPassword = "ae1aa640f6b735c4730fbb56",
-                ProcessorToken = "69ac9c704329bb067d427bf0"
+                ProcessorToken = "5a0e1ca1e5a11a2997bbf912"
             };
+			_processor = Processor.TheProcessor;
+			_paymentMethodToken = TestHelper.CreateScoobyDoPaymentMethod().PaymentMethodToken;
         }
 
         [Test]
         public void Fetch_Transaction_Test()
         {
-            var t = Transaction.Fetch("7C07CBBEEA7676981F711994");
+			var t_ref = _processor.Purchase(_paymentMethodToken, "20.00");
+            var t = Transaction.Fetch(t_ref.ReferenceId);
 
-            Assert.AreEqual(t.TransactionToken.ToLower(), "3bfde5b1e79aaef7fb1b6012".ToLower());
-            Assert.AreEqual(t.ReferenceId.ToLower(), "7c07cbbeea7676981f711994".ToLower());
-            Assert.AreEqual(t.CreatedAt, new DateTime(2011, 8, 7, 3, 19, 46, DateTimeKind.Utc));
+            Assert.AreEqual(t.TransactionToken.ToLower(), t_ref.TransactionToken.ToLower());
+            Assert.AreEqual(t.ReferenceId.ToLower(), t_ref.ReferenceId.ToLower());
             Assert.AreEqual(t.Descriptor, String.Empty);
             Assert.AreEqual(t.Custom, String.Empty);
             Assert.AreEqual(t.BillingReference, String.Empty);
             Assert.AreEqual(t.CustomerReference, String.Empty);
             Assert.AreEqual(TransactionType.Purchase, t.Type);
-            Assert.AreEqual(t.Amount, 50);
-            Assert.AreEqual(t.CurrencyCode.ToLower(), "US".ToLower());
-            Assert.AreEqual(t.ProcessorToken.ToLower(), "b0d9c4324dabd84975b0a5e1".ToLower());
+            Assert.AreEqual(t.Amount, 20);
+            Assert.AreEqual(t.CurrencyCode.ToLower(), "USD".ToLower());
+            Assert.AreEqual(t.ProcessorToken.ToLower(), "5a0e1ca1e5a11a2997bbf912".ToLower());
             Assert.IsNotNull(t.ProcessorResponse);
             Assert.IsNotNull(t.PaymentMethod);
         }

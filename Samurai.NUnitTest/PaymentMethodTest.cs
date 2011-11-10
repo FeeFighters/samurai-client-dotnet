@@ -29,16 +29,15 @@ namespace Samurai.NUnitTest
         [Test]
         public void Fetch_PaymentMethod_Test()
         {
-            var pm = PaymentMethod.Fetch("11162477aad1a7053b72dbd0");
+			var stored_pm = TestHelper.CreateScoobyDoPaymentMethod();
+            var pm = PaymentMethod.Fetch(stored_pm.PaymentMethodToken);
 
             Assert.IsNotNull(pm);
-            Assert.AreEqual(pm.PaymentMethodToken.ToLower(), "11162477aad1a7053b72dbd0".ToLower());
-            Assert.AreEqual(pm.CreatedAt, new DateTime(2011, 8, 7, 3, 19, 35, DateTimeKind.Utc));
+            Assert.AreEqual(pm.PaymentMethodToken.ToLower(), stored_pm.PaymentMethodToken.ToLower());
             Assert.IsFalse(pm.IsRetained);
             Assert.IsFalse(pm.IsRedacted);
             Assert.IsTrue(pm.IsSensitiveDataValid);
-            Assert.AreEqual(pm.LastFourDigits, "0027");
-            Assert.AreEqual(pm.CardType.ToLower(), "visa".ToLower());
+            Assert.AreEqual(pm.LastFourDigits, "1111");
             // write more...
         }
 
@@ -46,15 +45,15 @@ namespace Samurai.NUnitTest
         public void Update_PaymentMethod_Test()
         {
             // fetch
-            var pm = PaymentMethod.Fetch("11162477aad1a7053b72dbd0");
-            string oldCustom = pm.Custom;
+			var stored_pm = TestHelper.CreateScoobyDoPaymentMethod();
+            string oldCustom = stored_pm.Custom;
 
             // updating
             string newCustom = string.Format("Updated at {0}.", DateTime.UtcNow);
-            pm.Custom = newCustom;
-            pm.Update();
+            stored_pm.Custom = newCustom;
+            stored_pm.Update();
 
-            pm = PaymentMethod.Fetch("11162477aad1a7053b72dbd0");
+            var pm = PaymentMethod.Fetch(stored_pm.PaymentMethodToken);
 
             // assert
             Assert.IsNotNull(pm);

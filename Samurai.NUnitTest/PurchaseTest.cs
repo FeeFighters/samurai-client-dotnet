@@ -28,11 +28,11 @@ namespace Samurai.NUnitTest
             {
                 MerchantKey = "a1ebafb6da5238fb8a3ac9f6",
                 MerchantPassword = "ae1aa640f6b735c4730fbb56",
-                ProcessorToken = "69ac9c704329bb067d427bf0"
+                ProcessorToken = "5a0e1ca1e5a11a2997bbf912"
             };
 
             _processor = Processor.TheProcessor;
-            _paymentMethodToken = "11162477aad1a7053b72dbd0";
+            _paymentMethodToken = TestHelper.CreateScoobyDoPaymentMethod().PaymentMethodToken;
         }
 
         [TearDown]
@@ -77,11 +77,11 @@ namespace Samurai.NUnitTest
             string descriptor = _testDescriptor;
             string custom = _testCustom;
 
-            var t = _processor.Purchase(_paymentMethodToken, 18.75m, descriptor, custom);
+            var t = _processor.Purchase(_paymentMethodToken, 18.00m, descriptor, custom);
 
             Assert.IsTrue(t.ProcessorResponse.Success);
             Assert.AreEqual(TransactionType.Purchase, t.Type);
-            Assert.AreEqual(18.75m, t.Amount);
+            Assert.AreEqual(18.00m, t.Amount);
             Assert.AreEqual(descriptor, t.Descriptor);
             Assert.AreEqual(custom, t.Custom);
         }
@@ -89,7 +89,7 @@ namespace Samurai.NUnitTest
         [Test]
         public void Authorize_13_45_USD_As_Decimal()
         {
-            decimal amount = 13.45m;
+            decimal amount = 13.0m;
             string descriptor = _testDescriptor;
             string custom = _testCustom;
 
@@ -219,14 +219,14 @@ namespace Samurai.NUnitTest
         }
 
         [Test]
-        public void ShouldNot_Be_Able_To_Credit_Recent_Purchase_Test()
+        public void Should_Be_Able_To_Credit_Recent_Purchase_Test()
         {
             var amount = 7.35m;
 
             var purchase = _processor.Purchase(_paymentMethodToken, amount);
             var creditedPurchase = purchase.Credit();
 
-            Assert.IsFalse(creditedPurchase.ProcessorResponse.Success);
+            Assert.IsTrue(creditedPurchase.ProcessorResponse.Success);
             Assert.AreEqual(TransactionType.Credit, creditedPurchase.Type);
         }
     }

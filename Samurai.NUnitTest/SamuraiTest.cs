@@ -40,7 +40,7 @@ namespace Samurai.NUnitTest
             {
                 MerchantKey = "a1ebafb6da5238fb8a3ac9f6",
                 MerchantPassword = "ae1aa640f6b735c4730fbb56",
-                ProcessorToken = "69ac9c704329bb067d427bf0"
+                ProcessorToken = "5a0e1ca1e5a11a2997bbf912"
             };
 
             Samurai.Options = options;

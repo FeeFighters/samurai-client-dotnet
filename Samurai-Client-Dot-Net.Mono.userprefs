@@ -25,7 +25,17 @@
         <State />
       </Pad>
       <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State expanded="True" selected="True" />
+        <State expanded="True">
+          <Node name="Samurai.NUnitTest" expanded="True">
+            <Node name="Samurai" expanded="True">
+              <Node name="NUnitTest" expanded="True">
+                <Node name="PaymentMethodTest" selected="True" />
+                <Node name="PurchaseTest" expanded="True" />
+                <Node name="TransactionTest" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
