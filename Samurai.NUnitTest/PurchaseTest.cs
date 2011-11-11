@@ -72,7 +72,7 @@ namespace Samurai.NUnitTest
         }
 
         [Test]
-        public void Simple_Purchase_18_75_USD_As_Decimal_With_Descriptor_And_Custom()
+        public void Simple_Purchase_18_00_USD_As_Decimal_With_Descriptor_And_Custom()
         {
             string descriptor = _testDescriptor;
             string custom = _testCustom;
@@ -87,9 +87,9 @@ namespace Samurai.NUnitTest
         }
 
         [Test]
-        public void Authorize_13_45_USD_As_Decimal()
+        public void Authorize_13_01_USD_As_Decimal()
         {
-            decimal amount = 13.0m;
+            decimal amount = 13.01m;
             string descriptor = _testDescriptor;
             string custom = _testCustom;
 
@@ -141,8 +141,8 @@ namespace Samurai.NUnitTest
         [Test]
         public void Partially_Capture_Authorization_Test()
         {
-            var authAmount = 4m;
-            var captAmount = 2.5m;
+            var authAmount = 4.0m;
+            var captAmount = 2.0m;
 
             var authorization = _processor.Authorize(_paymentMethodToken, authAmount);
             var capturedTr = authorization.Capture(captAmount);
@@ -155,7 +155,7 @@ namespace Samurai.NUnitTest
         [Test]
         public void Void_Authorization_Test()
         {
-            var amount = 6.75m;
+            var amount = 6.00m;
 
             var authorization = _processor.Authorize(_paymentMethodToken, amount);
             var voidedAuth = authorization.Void();
@@ -174,14 +174,14 @@ namespace Samurai.NUnitTest
             var voidedPurchase = purchase.Void();
 
             Assert.IsTrue(voidedPurchase.ProcessorResponse.Success);
-            Assert.AreEqual(TransactionType.Void, voidedPurchase.Type);
+            Assert.AreEqual(TransactionType.Credit, voidedPurchase.Type);
             Assert.AreEqual(amount, voidedPurchase.Amount);
         }
 
         [Test]
         public void Purchase_With_Tracking_Data_Test()
         {
-            var amount = 8.15m;
+            var amount = 8.00m;
             string billingRef = "ABC123";
             string customerRef = "Customer (123)";
 
@@ -201,7 +201,7 @@ namespace Samurai.NUnitTest
         [Test]
         public void Authorize_With_Tracking_Data_Test()
         {
-            var amount = 8.25m;
+            var amount = 9.00m;
             string billingRef = "ABC123";
             string customerRef = "Customer (123)";
 
@@ -221,7 +221,7 @@ namespace Samurai.NUnitTest
         [Test]
         public void Should_Be_Able_To_Credit_Recent_Purchase_Test()
         {
-            var amount = 7.35m;
+            var amount = 7.00m;
 
             var purchase = _processor.Purchase(_paymentMethodToken, amount);
             var creditedPurchase = purchase.Credit();

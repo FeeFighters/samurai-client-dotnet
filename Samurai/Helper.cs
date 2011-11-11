@@ -34,9 +34,10 @@ namespace Samurai
                 case "capture": return TransactionType.Capture;
                 case "void": return TransactionType.Void;
                 case "credit": return TransactionType.Credit;
+				case "refund": return TransactionType.Credit;
             }
 
-            throw new ArgumentException("given string can't be converted into transaction type.");
+            throw new ArgumentException(value+" can't be converted into transaction type.");
         }
     }
 }

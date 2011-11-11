@@ -1,8 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Samurai/SamuraiBase.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Samurai.NUnitTest/PurchaseTest.cs">
     <Files>
       <File FileName="Samurai/SamuraiBase.cs" Line="27" Column="5" />
+      <File FileName="Samurai.NUnitTest/PurchaseTest.cs" Line="177" Column="51" />
+      <File FileName="Samurai/Helper.cs" Line="34" Column="35" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -11,10 +13,10 @@
           <Node name="Samurai.Mono" expanded="True">
             <Node name="References" expanded="True" />
             <Node name="Properties" expanded="True" />
-            <Node name="SamuraiBase.cs" selected="True" />
           </Node>
           <Node name="Samurai.NUnitTest" expanded="True">
             <Node name="References" expanded="True" />
+            <Node name="PurchaseTest.cs" selected="True" />
           </Node>
         </State>
       </Pad>
@@ -29,9 +31,11 @@
           <Node name="Samurai.NUnitTest" expanded="True">
             <Node name="Samurai" expanded="True">
               <Node name="NUnitTest" expanded="True">
-                <Node name="PaymentMethodTest" selected="True" />
-                <Node name="PurchaseTest" expanded="True" />
-                <Node name="TransactionTest" expanded="True" />
+                <Node name="PaymentMethodTest" expanded="True" />
+                <Node name="ProcessorTest" expanded="True" />
+                <Node name="PurchaseTest" expanded="True">
+                  <Node name="Void_Recent_Purchase_Test" selected="True" />
+                </Node>
               </Node>
             </Node>
           </Node>
@@ -40,7 +44,9 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/krall/Programming/samurai-client-dotnet/Samurai.NUnitTest/PurchaseTest.cs" line="163" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
