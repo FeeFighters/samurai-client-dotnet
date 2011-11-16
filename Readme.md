@@ -52,5 +52,5 @@ retrieve any of your processors.
 
 ### Samurai API Reference
 
-See the [API Reference](https://samurai.feefighters.com/developers/api-reference/dotnet) for a full explanation of how this library works with the Samurai API.
+See the [API Reference](https://samurai.feefighters.com/developers/dotnet/api-reference) for a full explanation of how this library works with the Samurai API.
     
