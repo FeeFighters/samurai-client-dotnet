@@ -11,7 +11,10 @@ namespace Samurai
     public static class Samurai
     {
         public static readonly string DefaultSite = "https://api.samurai.feefighters.com/v1/";
-        public static readonly SamuraiOptions DefaultOptions = new SamuraiOptions() { Site = DefaultSite };
+        public static readonly SamuraiOptions DefaultOptions = new SamuraiOptions() {
+            Site = DefaultSite,
+            Debug = false
+        };
 
         private static SamuraiOptions _options = DefaultOptions;
 
@@ -54,6 +57,16 @@ namespace Samurai
         public static string ProcessorToken
         {
             get { return _options.ProcessorToken; }
+        }
+
+        /// <summary>
+        /// Gets or sets debug mode.
+        /// </summary>
+        public static bool Debug
+        {
+            get {
+                return _options.Debug;
+            }
         }
     }
 }

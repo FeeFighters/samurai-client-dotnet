@@ -7,10 +7,26 @@ namespace Samurai.NUnitTest
 {
     public static class TestHelper
     {
-        public static PaymentMethod CreateScoobyDoPaymentMethod()
+        public static PaymentMethod CreatePaymentMethod(PaymentMethodPayload payload = null)
         {
-            return PaymentMethod.Create("Scooby", "Do", "Mystery Van", "IL", "60607",
-                "4111111111111111", "123", "04", "2014");
+            PaymentMethodPayload dummy = new PaymentMethodPayload()
+            {
+                FirstName = "FirstName",
+                LastName = "LastName",
+                Address1 = "123 Main St.",
+                Address2 = "Apt #3",
+                City = "Chicago",
+                State = "IL",
+                Zip = "10101",
+                CardNumber = "4111-1111-1111-1111",
+                Cvv = "123",
+                ExpiryMonth = 3,
+                ExpiryYear = 2015,
+                Custom = "custom",
+                Sandbox = true
+            };
+            dummy.Merge(payload);
+            return PaymentMethod.Create(dummy);
         }
     }
 }

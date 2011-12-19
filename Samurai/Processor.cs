@@ -40,17 +40,12 @@ namespace Samurai
         /// </summary>
         /// <param name="paymentMethodToken">Token identifying the payment method to authorize.</param>
         /// <param name="amount">Amount to authorize.</param>
-        /// <param name="descriptor">Descriptor for the transaction.</param>
-        /// <param name="custom">Custom data.</param>
-        /// <param name="customer_reference">An identifier for the customer, this will appear in the processor if supported.</param>
-        /// <param name="billing_reference">An identifier for the purchase, this will appear in the processor if supported.</param>
+        /// <param name="payload">Transaction payload object, for passing additional parameters</param>
         /// <returns>a transaction containing the processor's response.</returns>
-        public Transaction Purchase(string paymentMethodToken, decimal amount, string descriptor = null,
-            string custom = null, string customer_reference = null, string billing_reference = null)
+        public Transaction Purchase(string paymentMethodToken, decimal amount, TransactionPayload payload = null)
         {
             string amountString = Helper.DecimalToString(amount);
-            return Purchase(paymentMethodToken, amountString, descriptor, custom, customer_reference,
-                billing_reference);
+            return Purchase(paymentMethodToken, amountString, payload);
         }
 
         /// <summary>
@@ -59,13 +54,9 @@ namespace Samurai
         /// </summary>
         /// <param name="paymentMethodToken">Token identifying the payment method to authorize.</param>
         /// <param name="amount">Amount to authorize. Should be in format like "12.00".</param>
-        /// <param name="descriptor">Descriptor for the transaction.</param>
-        /// <param name="custom">Custom data.</param>
-        /// <param name="customer_reference">An identifier for the customer, this will appear in the processor if supported.</param>
-        /// <param name="billing_reference">An identifier for the purchase, this will appear in the processor if supported.</param>
-        /// <returns>a transaction containing the processor's response.</returns>
-        public Transaction Purchase(string paymentMethodToken, string amount, string descriptor = null,
-            string custom = null, string customer_reference = null, string billing_reference = null, string currencyCode = "USD")
+        /// <param name="payload">Transaction payload object, for passing additional parameters</param>
+        /// /// <returns>a transaction containing the processor's response.</returns>
+        public Transaction Purchase(string paymentMethodToken, string amount, TransactionPayload payload = null)
         {
             // create request
             var request = new RestRequest(Method.POST);
@@ -75,19 +66,13 @@ namespace Samurai
 
             // set processor token
             request.AddParameter("ProcessorToken", ProcessorToken, ParameterType.UrlSegment);
-
+               
             // generate payload
-            request.AddBody(new PurchaseXmlPayload()
-            {
-                Type = "purchase",
-                Amount = amount,
-                CurrencyCode = currencyCode,
-                PaymentMethodToken = paymentMethodToken,
-                Descriptor = descriptor ?? string.Empty,
-                Custom = custom ?? string.Empty,
-                CustomerReference = customer_reference ?? string.Empty,
-                BillingReference = billing_reference ?? string.Empty
-            });
+            payload = payload ?? new TransactionPayload();
+            payload.Type = "purchase";
+            payload.Amount = amount;
+            payload.PaymentMethodToken = paymentMethodToken;
+            request.AddBody(payload);
 
             // send a request and deserialize response into transaction
             return Execute<Transaction>(request);
@@ -98,17 +83,12 @@ namespace Samurai
         /// </summary>
         /// <param name="paymentMethodToken">Token identifying the payment method to authorize.</param>
         /// <param name="amount">Amount to authorize.</param>
-        /// <param name="descriptor">Descriptor for the transaction.</param>
-        /// <param name="custom">Custom data.</param>
-        /// <param name="customer_reference">An identifier for the customer, this will appear in the processor if supported.</param>
-        /// <param name="billing_reference">An identifier for the purchase, this will appear in the processor if supported.</param>
+        /// <param name="payload">Transaction payload object, for passing additional parameters</param>/// 
         /// <returns>a transaction containing the processor's response.</returns>
-        public Transaction Authorize(string paymentMethodToken, decimal amount, string descriptor = null,
-            string custom = null, string customer_reference = null, string billing_reference = null, string currencyCode = "USD")
+        public Transaction Authorize(string paymentMethodToken, decimal amount, TransactionPayload payload = null)
         {
             string amountString = Helper.DecimalToString(amount);
-            return Authorize(paymentMethodToken, amountString, descriptor, custom, customer_reference,
-                billing_reference);
+            return Authorize(paymentMethodToken, amountString, payload);
         }
 
         /// <summary>
@@ -116,13 +96,9 @@ namespace Samurai
         /// </summary>
         /// <param name="paymentMethodToken">Token identifying the payment method to authorize.</param>
         /// <param name="amount">Amount to authorize. Should be in format like "12.00".</param>
-        /// <param name="descriptor">Descriptor for the transaction.</param>
-        /// <param name="custom">Custom data.</param>
-        /// <param name="customer_reference">An identifier for the customer, this will appear in the processor if supported.</param>
-        /// <param name="billing_reference">An identifier for the purchase, this will appear in the processor if supported.</param>
+        /// <param name="payload">Transaction payload object, for passing additional parameters</param>/// 
         /// <returns>a transaction containing the processor's response.</returns>
-        public Transaction Authorize(string paymentMethodToken, string amount, string descriptor = null,
-            string custom = null, string customer_reference = null, string billing_reference = null, string currencyCode = "USD")
+        public Transaction Authorize(string paymentMethodToken, string amount, TransactionPayload payload = null)
         {
             // create request
             var request = new RestRequest(Method.POST);
@@ -134,17 +110,11 @@ namespace Samurai
             request.AddParameter("ProcessorToken", ProcessorToken, ParameterType.UrlSegment);
 
             // generate payload
-            request.AddBody(new PurchaseXmlPayload()
-            {
-                Type = "authorize",
-                Amount = amount,
-                CurrencyCode = currencyCode,
-                PaymentMethodToken = paymentMethodToken,
-                Descriptor = descriptor ?? string.Empty,
-                Custom = custom ?? string.Empty,
-                CustomerReference = customer_reference ?? string.Empty,
-                BillingReference = billing_reference ?? string.Empty
-            });
+            payload = payload ?? new TransactionPayload();
+            payload.Type = "authorize";
+            payload.Amount = amount;
+            payload.PaymentMethodToken = paymentMethodToken;
+            request.AddBody(payload);
 
             // send a request and deserialize response into transaction
             return Execute<Transaction>(request);

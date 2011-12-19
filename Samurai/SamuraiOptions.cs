@@ -31,6 +31,11 @@ namespace Samurai
         public string ProcessorToken { get; set; }
 
         /// <summary>
+        /// Gets or sets debug mode
+        /// </summary>
+        public bool Debug { get; set; }
+
+        /// <summary>
         /// Merges this options with another. Properties of this options which are not null
         /// will not be merged (overrided).
         /// </summary>
@@ -42,6 +47,7 @@ namespace Samurai
             MerchantKey = MerchantKey ?? options.MerchantKey;
             MerchantPassword = MerchantPassword ?? options.MerchantPassword;
             ProcessorToken = ProcessorToken ?? options.ProcessorToken;
+            Debug = Debug || options.Debug;
 
             return this;
         }

@@ -22,7 +22,7 @@ namespace Samurai.NUnitTest
                 ProcessorToken = "5a0e1ca1e5a11a2997bbf912"
             };
 			_processor = Processor.TheProcessor;
-			_paymentMethodToken = TestHelper.CreateScoobyDoPaymentMethod().PaymentMethodToken;
+			_paymentMethodToken = TestHelper.CreatePaymentMethod().PaymentMethodToken;
         }
 
         [Test]

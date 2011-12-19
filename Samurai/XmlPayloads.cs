@@ -7,9 +7,9 @@ using RestSharp.Serializers;
 namespace Samurai
 {
     [SerializeAs(Name = "transaction")]
-    class PurchaseXmlPayload
+    public class TransactionPayload
     {
-        public PurchaseXmlPayload()
+        public TransactionPayload()
         {
             CurrencyCode = "USD";
         }
@@ -52,17 +52,80 @@ namespace Samurai
         public string Custom { get; set; }
 
         /// <summary>
-        /// Gets or sets an identifier for the customer, 
+        /// Gets or sets an identifier for the customer,
         /// this will appear in the processor if supported.
         /// </summary>
         [SerializeAs(Name = "customer_reference")]
         public string CustomerReference { get; set; }
 
         /// <summary>
-        /// Gets or sets an identifier for the purchase, 
+        /// Gets or sets an identifier for the purchase,
         /// this will appear in the processor if supported.
         /// </summary>
         [SerializeAs(Name = "billing_reference")]
         public string BillingReference { get; set; }
+    }
+
+    [SerializeAs(Name = "payment_method")]
+    public class PaymentMethodPayload
+    {
+        [SerializeAs(Name = "first_name")]
+        public string FirstName {get;set;}
+
+        [SerializeAs(Name = "last_name")]
+        public string LastName {get;set;}
+
+        [SerializeAs(Name = "address_1")]
+        public string Address1 {get;set;}
+
+        [SerializeAs(Name = "address_2")]
+        public string Address2 {get;set;}
+
+        [SerializeAs(Name = "city")]
+        public string City {get;set;}
+
+        [SerializeAs(Name = "state")]
+        public string State {get;set;}
+
+        [SerializeAs(Name = "zip")]
+        public string Zip {get;set;}
+
+        [SerializeAs(Name = "card_number")]
+        public string CardNumber {get;set;}
+
+        [SerializeAs(Name = "cvv")]
+        public string Cvv {get;set;}
+
+        [SerializeAs(Name = "expiry_month")]
+        public int ExpiryMonth {get;set;}
+
+        [SerializeAs(Name = "expiry_year")]
+        public int ExpiryYear {get;set;}
+
+        [SerializeAs(Name = "custom")]
+        public string Custom {get;set;}
+
+        [SerializeAs(Name = "sandbox")]
+        public bool Sandbox {get;set;}
+
+        public PaymentMethodPayload Merge(PaymentMethodPayload payload)
+        {
+            if (payload == null) return this;
+
+            if (payload.FirstName != null)  { FirstName = payload.FirstName; }
+            if (payload.LastName != null)   { LastName = payload.LastName; }
+            if (payload.Address1 != null)   { Address1 = payload.Address1; }
+            if (payload.Address2 != null)   { Address2 = payload.Address2; }
+            if (payload.City != null)       { City = payload.City; }
+            if (payload.State != null)      { State = payload.State; }
+            if (payload.Zip != null)        { Zip = payload.Zip; }
+            if (payload.CardNumber != null) { CardNumber = payload.CardNumber; }
+            if (payload.Cvv != null)        { Cvv = payload.Cvv; }
+            ExpiryMonth = payload.ExpiryMonth==0 ? ExpiryMonth : payload.ExpiryMonth;
+            ExpiryYear = payload.ExpiryYear==0 ? ExpiryYear : payload.ExpiryYear;
+            if (payload.Custom != null)     { Custom = payload.Custom; }
+            Sandbox = Sandbox || payload.Sandbox;
+            return this;
+        }
     }
 }

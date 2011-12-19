@@ -189,5 +189,31 @@ namespace Samurai
 
             return Execute<Transaction>(request);
         }
+        
+        /// <summary>
+        /// Create a credit or refund against the original transaction. Optionally accepts an amount 
+        /// to credit, the default is to credit the full value of the original amount.
+        /// </summary>
+        /// <param name="amount">Amount of partial reverse, specify only if needed.</param>
+        /// <returns>a reversed transaction.</returns>
+        public Transaction Reverse(string amount = null)
+        {
+            // create request
+            var request = new RestRequest(Method.POST);
+            request.RequestFormat = DataFormat.Xml;
+            request.Resource = "transactions/{TransactionToken}/reverse.xml";
+            request.RootElement = "transaction";
+
+            // add transaction token as an url parameter
+            request.AddParameter("TransactionToken", TransactionToken, ParameterType.UrlSegment);
+
+            // generate payload
+            string amountToPayload = !string.IsNullOrWhiteSpace(amount) ? amount : Helper.DecimalToString(Amount);
+            string payload = string.Format("<amount>{0}</amount>", amountToPayload);
+            // add payload as a request body
+            request.AddParameter("text/xml", payload, ParameterType.RequestBody);
+
+            return Execute<Transaction>(request);
+        }        
     }
 }

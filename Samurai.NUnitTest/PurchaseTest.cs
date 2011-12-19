@@ -32,7 +32,7 @@ namespace Samurai.NUnitTest
             };
 
             _processor = Processor.TheProcessor;
-            _paymentMethodToken = TestHelper.CreateScoobyDoPaymentMethod().PaymentMethodToken;
+            _paymentMethodToken = TestHelper.CreatePaymentMethod().PaymentMethodToken;
         }
 
         [TearDown]
@@ -74,32 +74,27 @@ namespace Samurai.NUnitTest
         [Test]
         public void Simple_Purchase_18_00_USD_As_Decimal_With_Descriptor_And_Custom()
         {
-            string descriptor = _testDescriptor;
-            string custom = _testCustom;
-
-            var t = _processor.Purchase(_paymentMethodToken, 18.00m, descriptor, custom);
+            var t = _processor.Purchase(_paymentMethodToken, 18.00m, new TransactionPayload(){Descriptor = _testDescriptor, Custom = _testCustom});
 
             Assert.IsTrue(t.ProcessorResponse.Success);
             Assert.AreEqual(TransactionType.Purchase, t.Type);
             Assert.AreEqual(18.00m, t.Amount);
-            Assert.AreEqual(descriptor, t.Descriptor);
-            Assert.AreEqual(custom, t.Custom);
+            Assert.AreEqual(_testDescriptor, t.Descriptor);
+            Assert.AreEqual(_testCustom, t.Custom);
         }
 
         [Test]
         public void Authorize_13_01_USD_As_Decimal()
         {
             decimal amount = 13.01m;
-            string descriptor = _testDescriptor;
-            string custom = _testCustom;
 
-            var t = _processor.Authorize(_paymentMethodToken, amount, descriptor, custom);
+            var t = _processor.Authorize(_paymentMethodToken, amount, new TransactionPayload() {Descriptor = _testDescriptor, Custom = _testCustom});
 
             Assert.IsTrue(t.ProcessorResponse.Success);
             Assert.AreEqual(TransactionType.Authorize, t.Type);
             Assert.AreEqual(amount, t.Amount);
-            Assert.AreEqual(descriptor, t.Descriptor);
-            Assert.AreEqual(custom, t.Custom);
+            Assert.AreEqual(_testDescriptor, t.Descriptor);
+            Assert.AreEqual(_testCustom, t.Custom);
         }
 
         [Test]
@@ -185,10 +180,10 @@ namespace Samurai.NUnitTest
             string billingRef = "ABC123";
             string customerRef = "Customer (123)";
 
-            var purchase = _processor.Purchase(_paymentMethodToken, amount,
-                customer_reference: customerRef,
-                billing_reference: billingRef
-            );
+            var purchase = _processor.Purchase(_paymentMethodToken, amount, new TransactionPayload() {
+                CustomerReference = customerRef,
+                BillingReference = billingRef
+            });
 
             Assert.IsNotNull(purchase);
             Assert.IsTrue(purchase.ProcessorResponse.Success);
@@ -205,10 +200,10 @@ namespace Samurai.NUnitTest
             string billingRef = "ABC123";
             string customerRef = "Customer (123)";
 
-            var authorization = _processor.Authorize(_paymentMethodToken, amount,
-                customer_reference: customerRef,
-                billing_reference: billingRef
-            );
+            var authorization = _processor.Authorize(_paymentMethodToken, amount, new TransactionPayload() {
+                CustomerReference = customerRef,
+                BillingReference = billingRef
+            });
 
             Assert.IsNotNull(authorization);
             Assert.IsTrue(authorization.ProcessorResponse.Success);

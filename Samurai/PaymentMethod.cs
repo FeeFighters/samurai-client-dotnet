@@ -49,9 +49,20 @@ namespace Samurai
         public bool IsSensitiveDataValid { get; set; }
 
         /// <summary>
+        /// Gets or sets a value that indicates whether the expiration date is valid.
+        /// </summary>
+        public bool IsExpirationValid { get; set; }
+
+        /// <summary>
         /// Gets or sets a list of messages associated with this payment method.
         /// </summary>
         public List<Message> Messages { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of errors associated with this payment method.
+        /// </summary>
+        Dictionary<string, List<string>> _errors = new Dictionary<string, List<string>>();
+        public Dictionary<string, List<string>> Errors { get { return _errors; } }
 
         /// <summary>
         /// Gets or sets last four digits of associated card number.
@@ -138,7 +149,7 @@ namespace Samurai
             // add token as an url parameter
             request.AddParameter("PaymentMethodToken", paymentMethodToken, ParameterType.UrlSegment);
 
-            return Execute<PaymentMethod>(request);
+            return Execute(request);
         }
 
         /// <summary>
@@ -191,30 +202,19 @@ namespace Samurai
             // add xml payload as a request body
             request.AddParameter("text/xml", doc.ToString(), ParameterType.RequestBody);
 
-            return Execute<PaymentMethod>(request);
+            return Execute(request);
         }
 
         /// <summary>
         /// Creates a brand new payment method with given parameters and returns its token.
         /// </summary>
-        /// <param name="firstName">First name.</param>
-        /// <param name="lastName">Last name.</param>
-        /// <param name="city">City.</param>
-        /// <param name="state">State.</param>
-        /// <param name="zip">Zip.</param>
-        /// <param name="cardNumber">Card number.</param>
-        /// <param name="cardCVV">Security code</param>
-        /// <param name="expMonth">Month of the expiration date.</param>
-        /// <param name="expYear">Year of the expiration date.</param>
-        /// <param name="sandbox">Sandbox payment method flag (sandbox PMs can only be used with Sandbox Processors)</param>
-        /// <param name="redirect_url">Url to redirect to from transparent redirect</param>
+        /// <param name="payload">Payment Method payload, containing parameters for the new PM</param>
         /// <returns>token of a brand new payment method.</returns>
-        public static string CreateNewPaymentMethodToken(string firstName, string lastName, string city, string state,
-            string zip, string cardNumber, string cardCVV, string expMonth, string expYear, bool sandbox = true, string redirect_url = null)
+        public static string TokenizePaymentMethod(PaymentMethodPayload payload)
         {
             // client for creating
             var client = new RestClient();
-            client.BaseUrl = Samurai.Site; //"https://api.samurai.feefighters.com/v1/";
+            client.BaseUrl = Samurai.Site;
             
             // create post-request 
             var request = new RestRequest(Method.POST);
@@ -222,30 +222,35 @@ namespace Samurai
             request.Resource = "payment_methods/tokenize";
 			request.AddParameter("Accept", "application/json", ParameterType.HttpHeader);
 			
-            // it seems like for redirecting IIS should be installed
-            request.AddParameter("redirect_url", string.IsNullOrWhiteSpace(redirect_url) ? "http://127.0.0.1:80" : redirect_url);
+            request.AddParameter("redirect_url", "http://127.0.0.1:80");
             request.AddParameter("merchant_key", Samurai.MerchantKey);
 
-            request.AddParameter("credit_card[first_name]", firstName);
-            request.AddParameter("custom", "");
-            request.AddParameter("credit_card[last_name]", lastName);
-            
-            request.AddParameter("credit_card[city]", city);
-            request.AddParameter("credit_card[state]", state);
-            request.AddParameter("credit_card[zip]", zip);
-            
-            request.AddParameter("credit_card[card_number]", cardNumber);
-            request.AddParameter("credit_card[cvv]", cardCVV);
-            request.AddParameter("credit_card[expiry_month]", expMonth);
-            request.AddParameter("credit_card[expiry_year]", expYear);
-            
-            if (sandbox)
-            {
-                request.AddParameter("sandbox", "true");
-            }
+            request.AddParameter("credit_card[first_name]", payload.FirstName);
+            request.AddParameter("credit_card[last_name]", payload.LastName);
+            request.AddParameter("credit_card[address_1]", payload.Address1);
+            request.AddParameter("credit_card[address_2]", payload.Address2);
+            request.AddParameter("credit_card[city]", payload.City);
+            request.AddParameter("credit_card[state]", payload.State);
+            request.AddParameter("credit_card[zip]", payload.Zip);
+            request.AddParameter("credit_card[card_number]", payload.CardNumber);
+            request.AddParameter("credit_card[cvv]", payload.Cvv);
+            request.AddParameter("credit_card[expiry_month]", payload.ExpiryMonth);
+            request.AddParameter("credit_card[expiry_year]", payload.ExpiryYear);
+            request.AddParameter("custom", payload.Custom);
+            request.AddParameter("sandbox", payload.Sandbox);
 
             // get response
+            if (Samurai.Debug) {
+                Console.WriteLine(request.Resource.ToString());
+                request.Parameters.ForEach(delegate(RestSharp.Parameter p) {
+                    Console.WriteLine(p.ToString());
+                });
+            }
             var response = client.Execute(request);
+            if (Samurai.Debug) {
+                Console.WriteLine(response.StatusCode.ToString() + " - " + response.StatusDescription.ToString());
+                Console.WriteLine(response.Content.ToString());
+            }
 
             // get token from url
             var match = Regex.Match(response.Content, "\"payment_method_token\":\\s*\"(\\w+)\"", RegexOptions.IgnoreCase);
@@ -256,22 +261,12 @@ namespace Samurai
         /// <summary>
         /// Creates a brand new payment method with given parameters.
         /// </summary>
-        /// <param name="firstName">First name.</param>
-        /// <param name="lastName">Last name.</param>
-        /// <param name="city">City.</param>
-        /// <param name="state">State.</param>
-        /// <param name="zip">Zip.</param>
-        /// <param name="cardNumber">Card number.</param>
-        /// <param name="cardCVV">Security code</param>
-        /// <param name="expMonth">Month of the expiration date.</param>
-        /// <param name="expYear">Year of the expiration date.</param>
+        /// <param name="payload">Payment Method payload, containing parameters for the new PM</param>
         /// <returns>a brand new payment method.</returns>
-        public static PaymentMethod Create(string firstName, string lastName, string city, string state,
-            string zip, string cardNumber, string cardCVV, string expMonth, string expYear, bool sandbox = true)
+        public static PaymentMethod Create(PaymentMethodPayload payload)
         {
             // create a payment method
-            string pmToken = CreateNewPaymentMethodToken(firstName, lastName, city, state, zip,
-                cardNumber, cardCVV, expMonth, expYear, sandbox);
+            string pmToken = TokenizePaymentMethod(payload);
 
             // fetch it ny its token
             PaymentMethod pm = PaymentMethod.Fetch(pmToken);
@@ -293,7 +288,7 @@ namespace Samurai
             // add token as an url parameter
             request.AddParameter("PaymentMethodToken", PaymentMethodToken, ParameterType.UrlSegment);
 
-            return Execute<PaymentMethod>(request);
+            return Execute(request);
         }
 
         /// <summary>
@@ -311,7 +306,26 @@ namespace Samurai
             // add token as an url parameter
             request.AddParameter("PaymentMethodToken", PaymentMethodToken, ParameterType.UrlSegment);
 
-            return Execute<PaymentMethod>(request);
+            return Execute(request);
+        }
+
+        protected static PaymentMethod Execute(RestRequest request)
+        {
+            var pm = Execute<PaymentMethod>(request);
+            pm.ProcessResponseErrors();
+            return pm;
+        }
+
+        protected void ProcessResponseErrors()
+        {
+            // Sort the messages so that more-critical/relevant ones appear first, since only the first error is added to a field
+            Messages.Sort(new MessageComparer());
+            foreach (Message message in Messages)
+            {
+                if (!Errors.ContainsKey(message.Context) || Errors[message.Context].Count == 0) {
+                    Errors.Add(message.Context, new List<string>() {message.Description});
+                }
+            }
         }
     }
 }
