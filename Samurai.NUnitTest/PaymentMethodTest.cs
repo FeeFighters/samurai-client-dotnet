@@ -10,6 +10,7 @@ namespace Samurai.NUnitTest
     public class PaymentMethodTest
     {
         PaymentMethodPayload defaultPayload;
+        PaymentMethodPayload defaultUpdatePayload;
 
         [SetUp]
         public void TestInitialize()
@@ -18,7 +19,7 @@ namespace Samurai.NUnitTest
             {
                 MerchantKey = "a1ebafb6da5238fb8a3ac9f6",
                 MerchantPassword = "ae1aa640f6b735c4730fbb56",
-                ProcessorToken = "69ac9c704329bb067d427bf0",
+                ProcessorToken = "5a0e1ca1e5a11a2997bbf912",
                 Debug = true
             };
             
@@ -38,6 +39,23 @@ namespace Samurai.NUnitTest
                 Custom = "custom",
                 Sandbox = true
             };
+
+            defaultUpdatePayload = new PaymentMethodPayload()
+            {
+                FirstName = "FirstNameX",
+                LastName = "LastNameX",
+                Address1 = "123 Main St.X",
+                Address2 = "Apt #3X",
+                City = "ChicagoX",
+                State = "IL",
+                Zip = "10101",
+                CardNumber = "5454-5454-5454-5454",
+                Cvv = "456",
+                ExpiryMonth = 5,
+                ExpiryYear = 2016,
+                Custom = "customX",
+                Sandbox = true
+            };
         }
 
         [TearDown]
@@ -46,245 +64,247 @@ namespace Samurai.NUnitTest
             Samurai.Options = Samurai.DefaultOptions;
         }
 
-[Test]
-public void S2SCreateShouldBeSuccessful()
-{
-    var pm = TestHelper.CreatePaymentMethod(defaultPayload);
-    
-    Assert.IsTrue(pm.IsSensitiveDataValid);
-    Assert.IsTrue(pm.IsExpirationValid);
-    Assert.AreEqual(defaultPayload.FirstName, pm.FirstName);
-    Assert.AreEqual(defaultPayload.LastName, pm.LastName);
-    Assert.AreEqual(defaultPayload.Address1, pm.Address1);
-    Assert.AreEqual(defaultPayload.Address2, pm.Address2);
-    Assert.AreEqual(defaultPayload.City, pm.City);
-    Assert.AreEqual(defaultPayload.State, pm.State);
-    Assert.AreEqual(defaultPayload.Zip, pm.Zip);
-    Assert.AreEqual(defaultPayload.CardNumber.Substring(defaultPayload.CardNumber.Length - 4), pm.LastFourDigits);
-    Assert.AreEqual(defaultPayload.ExpiryMonth, pm.ExpiryMonth);
-    Assert.AreEqual(defaultPayload.ExpiryYear, pm.ExpiryYear);
-}
-
-[Test]
-public void S2SCreateFailOnInputCardNumberShouldReturnIsBlank(){
-    PaymentMethodPayload attrs = defaultPayload.Merge(new PaymentMethodPayload(){ CardNumber = "" });
-    var pm = TestHelper.CreatePaymentMethod(attrs);
-
-    Assert.IsFalse( pm.IsSensitiveDataValid );
-    Assert.AreEqual( new List<string>(){"The card number was blank."}, pm.Errors["input.card_number"] );
-}
-[Test]
-public void S2SCreateFailOnInputCardNumberShouldReturnTooShort(){
-    PaymentMethodPayload attrs = defaultPayload.Merge(new PaymentMethodPayload(){ CardNumber = "4111-1" });
-    var pm = TestHelper.CreatePaymentMethod(attrs);
-
-    Assert.IsFalse( pm.IsSensitiveDataValid );
-    Assert.AreEqual( new List<string>(){"The card number was too short."}, pm.Errors["input.card_number"] );
-}
-[Test]
-public void S2SCreateFailOnInputCardNumberShouldReturnTooLong(){
-    PaymentMethodPayload attrs = defaultPayload.Merge(new PaymentMethodPayload(){ CardNumber = "4111-1111-1111-1111-11" });
-    var pm = TestHelper.CreatePaymentMethod(attrs);
-
-    Assert.IsFalse( pm.IsSensitiveDataValid );
-    Assert.AreEqual( new List<string>(){"The card number was too long."}, pm.Errors["input.card_number"] );
-}
-[Test]
-public void S2SCreateFailOnInputCardNumberShouldReturnFailedChecksum(){
-    PaymentMethodPayload attrs = defaultPayload.Merge(new PaymentMethodPayload(){ CardNumber = "4111-1111-1111-1234" });
-    var pm = TestHelper.CreatePaymentMethod(attrs);
-
-    Assert.IsFalse( pm.IsSensitiveDataValid );
-    Assert.AreEqual( new List<string>(){"The card number was invalid."}, pm.Errors["input.card_number"] );
-}
-
-[Test]
-public void S2SCreateFailOnInputCvvShouldReturnTooShort(){
-  
-}
-[Test]
-public void S2SCreateFailOnInputCvvShouldReturnTooLong(){
-  
-}
-[Test]
-public void S2SCreateFailOnInputCvvShouldReturnNotNumeric(){
-  
-}
-
-[Test]
-public void S2SCreateFailOnInputExpiryMonthShouldReturnIsBlank(){
-  
-}
-[Test]
-public void S2SCreateFailOnInputExpiryMonthShouldReturnIsInvalid(){
-  
-}
-[Test]
-public void S2SCreateFailOnInputExpiryYearShouldReturnIsBlank(){
-  
-}
-[Test]
-public void S2SCreateFailOnInputExpiryYearShouldReturnIsInvalid(){
-  
-}
-
-[Test]
-public void S2SUpdateShouldBeSuccessful()
-{
-  
-}
-[Test]
-public void S2SUpdateShouldBeSuccessfulPreservingSensitiveData()
-{
-  
-}
-
-[Test]
-public void S2SUpdateFailOnInputCardNumberShouldReturnTooShort()
-{
-  
-}
-[Test]
-public void S2SUpdateFailOnInputCardNumberShouldReturnTooLong()
-{
-  
-}
-[Test]
-public void S2SUpdateFailOnInputCardNumberShouldReturnFailedChecksum()
-{
-  
-}
-
-[Test]
-public void S2SUpdateFailOnInputCvvShouldReturnTooShort()
-{
-  
-}
-[Test]
-public void S2SUpdateFailOnInputCvvShouldReturnTooLong()
-{
-  
-}
-[Test]
-public void S2SUpdateFailOnInputCvvShouldReturnNotNumeric()
-{
-  
-}
-
-[Test]
-public void S2SUpdateFailOnInputExpiryMonthShouldReturnIsBlank()
-{
-  
-}
-[Test]
-public void S2SUpdateFailOnInputExpiryMonthShouldReturnIsInvalid()
-{
-  
-}
-[Test]
-public void S2SUpdateFailOnInputExpiryYearShouldReturnIsBlank()
-{
-  
-}
-[Test]
-public void S2SUpdateFailOnInputExpiryYearShouldReturnIsInvalid()
-{
-  
-}
-
-[Test]
-public void FindShouldBeSuccessful()
-{
-  
-}
-[Test]
-public void FindShouldFailOnAnInvalidToken()
-{
-  
-}
-
-
-
-
         [Test]
-        public void Fetch_PaymentMethod_Test()
+        public void S2SCreateShouldBeSuccessful()
         {
-			var stored_pm = TestHelper.CreatePaymentMethod();
-            var pm = PaymentMethod.Fetch(stored_pm.PaymentMethodToken);
-
-            Assert.IsNotNull(pm);
-            Assert.AreEqual(pm.PaymentMethodToken.ToLower(), stored_pm.PaymentMethodToken.ToLower());
-            Assert.IsFalse(pm.IsRetained);
-            Assert.IsFalse(pm.IsRedacted);
+            var pm = TestHelper.CreatePaymentMethod(defaultPayload);
+            
             Assert.IsTrue(pm.IsSensitiveDataValid);
-            Assert.AreEqual(pm.LastFourDigits, "1111");
-            // write more...
+            Assert.IsTrue(pm.IsExpirationValid);
+            Assert.AreEqual(defaultPayload.FirstName, pm.FirstName);
+            Assert.AreEqual(defaultPayload.LastName, pm.LastName);
+            Assert.AreEqual(defaultPayload.Address1, pm.Address1);
+            Assert.AreEqual(defaultPayload.Address2, pm.Address2);
+            Assert.AreEqual(defaultPayload.City, pm.City);
+            Assert.AreEqual(defaultPayload.State, pm.State);
+            Assert.AreEqual(defaultPayload.Zip, pm.Zip);
+            Assert.AreEqual(defaultPayload.CardNumber.Substring(defaultPayload.CardNumber.Length - 4), pm.LastFourDigits);
+            Assert.AreEqual(defaultPayload.ExpiryMonth, pm.ExpiryMonth);
+            Assert.AreEqual(defaultPayload.ExpiryYear, pm.ExpiryYear);
         }
-
+        
         [Test]
-        public void Update_PaymentMethod_Test()
-        {
-            // fetch
-			var stored_pm = TestHelper.CreatePaymentMethod();
-            string oldCustom = stored_pm.Custom;
-
-            // updating
-            string newCustom = string.Format("Updated at {0}.", DateTime.UtcNow);
-            stored_pm.Custom = newCustom;
-            stored_pm.Update();
-
-            var pm = PaymentMethod.Fetch(stored_pm.PaymentMethodToken);
-
-            // assert
-            Assert.IsNotNull(pm);
-            Assert.AreNotEqual(oldCustom, pm.Custom);
-            Assert.AreEqual(newCustom, pm.Custom);
-            Assert.IsTrue(pm.IsSensitiveDataValid);
+        public void S2SCreateFailOnInputCardNumberShouldReturnIsBlank(){
+            PaymentMethodPayload attrs = defaultPayload.Merge(new PaymentMethodPayload(){ CardNumber = "" });
+            var pm = TestHelper.CreatePaymentMethod(attrs);
+        
+            Assert.IsFalse( pm.IsSensitiveDataValid );
+            Assert.AreEqual( new List<string>(){"The card number was blank."}, pm.Errors["input.card_number"] );
         }
-
         [Test]
-        public void Create_Then_Redact_PaymentMethod_Test()
-        {
-            // create new
-            var pm = TestHelper.CreatePaymentMethod();
-
-            Assert.IsTrue(pm.IsSensitiveDataValid);
-            Assert.IsFalse(pm.IsRetained);
-            Assert.IsFalse(pm.IsRedacted);
-
-            // redact
-            var redactedPM = pm.Redact();
-
-            Assert.IsTrue(redactedPM.IsRedacted);
-            Assert.IsTrue(redactedPM.IsSensitiveDataValid);
-            Assert.IsFalse(pm.IsRetained);
+        public void S2SCreateFailOnInputCardNumberShouldReturnTooShort(){
+            PaymentMethodPayload attrs = defaultPayload.Merge(new PaymentMethodPayload(){ CardNumber = "4111-1" });
+            var pm = TestHelper.CreatePaymentMethod(attrs);
+        
+            Assert.IsFalse( pm.IsSensitiveDataValid );
+            Assert.AreEqual( new List<string>(){"The card number was too short."}, pm.Errors["input.card_number"] );
         }
-
         [Test]
-        public void Create_Then_Retain_Then_Redact_PaymentMethod_Test()
-        {
-            // create new
-            var pm = TestHelper.CreatePaymentMethod();
-
-            Assert.IsTrue(pm.IsSensitiveDataValid);
-            Assert.IsFalse(pm.IsRetained);
-            Assert.IsFalse(pm.IsRedacted);
-
-            // redact
-            var retainedPM = pm.Retain();
-
-            Assert.IsTrue(retainedPM.IsSensitiveDataValid);
-            Assert.IsTrue(retainedPM.IsRetained);
-            Assert.IsFalse(retainedPM.IsRedacted);
-
-            // simple purchase
-            var redactedPM = retainedPM.Redact();
-
-            Assert.IsTrue(redactedPM.IsSensitiveDataValid);
-            Assert.IsTrue(redactedPM.IsRetained);
-            Assert.IsTrue(redactedPM.IsRedacted);
+        public void S2SCreateFailOnInputCardNumberShouldReturnTooLong(){
+            PaymentMethodPayload attrs = defaultPayload.Merge(new PaymentMethodPayload(){ CardNumber = "4111-1111-1111-1111-11" });
+            var pm = TestHelper.CreatePaymentMethod(attrs);
+        
+            Assert.IsFalse( pm.IsSensitiveDataValid );
+            Assert.AreEqual( new List<string>(){"The card number was too long."}, pm.Errors["input.card_number"] );
         }
-
+        [Test]
+        public void S2SCreateFailOnInputCardNumberShouldReturnFailedChecksum(){
+            PaymentMethodPayload attrs = defaultPayload.Merge(new PaymentMethodPayload(){ CardNumber = "4111-1111-1111-1234" });
+            var pm = TestHelper.CreatePaymentMethod(attrs);
+        
+            Assert.IsFalse( pm.IsSensitiveDataValid );
+            Assert.AreEqual( new List<string>(){"The card number was invalid."}, pm.Errors["input.card_number"] );
+        }
+        
+        [Test]
+        public void S2SCreateFailOnInputCvvShouldReturnTooShort(){
+            PaymentMethodPayload attrs = defaultPayload.Merge(new PaymentMethodPayload(){ Cvv = "1" });
+            var pm = TestHelper.CreatePaymentMethod(attrs);
+        
+            Assert.IsFalse( pm.IsSensitiveDataValid );
+            Assert.AreEqual( new List<string>(){"The CVV was too short."}, pm.Errors["input.cvv"] );
+        }
+        [Test]
+        public void S2SCreateFailOnInputCvvShouldReturnTooLong(){
+            PaymentMethodPayload attrs = defaultPayload.Merge(new PaymentMethodPayload(){ Cvv = "111111" });
+            var pm = TestHelper.CreatePaymentMethod(attrs);
+        
+            Assert.IsFalse( pm.IsSensitiveDataValid );
+            Assert.AreEqual( new List<string>(){"The CVV was too long."}, pm.Errors["input.cvv"] );
+        }
+        [Test]
+        public void S2SCreateFailOnInputCvvShouldReturnNotNumeric(){
+            PaymentMethodPayload attrs = defaultPayload.Merge(new PaymentMethodPayload(){ Cvv = "abcd1" });
+            var pm = TestHelper.CreatePaymentMethod(attrs);
+        
+            Assert.IsFalse( pm.IsSensitiveDataValid );
+            Assert.AreEqual( new List<string>(){"The CVV was invalid."}, pm.Errors["input.cvv"] );
+        }
+        
+        [Test]
+        public void S2SCreateFailOnInputExpiryMonthShouldReturnIsInvalid(){
+            PaymentMethodPayload attrs = defaultPayload.Merge(new PaymentMethodPayload(){ ExpiryMonth = -1 });
+            var pm = TestHelper.CreatePaymentMethod(attrs);
+        
+            Assert.IsTrue( pm.IsSensitiveDataValid );
+            Assert.IsFalse( pm.IsExpirationValid );
+            Assert.AreEqual( new List<string>(){"The expiration month was invalid."}, pm.Errors["input.expiry_month"] );
+        }
+        [Test]
+        public void S2SCreateFailOnInputExpiryYearShouldReturnIsInvalid(){
+            PaymentMethodPayload attrs = defaultPayload.Merge(new PaymentMethodPayload(){ ExpiryYear = -1 });
+            var pm = TestHelper.CreatePaymentMethod(attrs);
+        
+            Assert.IsTrue( pm.IsSensitiveDataValid );
+            Assert.IsFalse( pm.IsExpirationValid );
+            Assert.AreEqual( new List<string>(){"The expiration year was invalid."}, pm.Errors["input.expiry_year"] );
+        }
+        
+        [Test]
+        public void S2SUpdateShouldBeSuccessful()
+        {
+            var pm = TestHelper.CreatePaymentMethod(defaultPayload);
+            pm.UpdateAttributes(defaultUpdatePayload);
+        
+            Assert.IsTrue(pm.IsSensitiveDataValid);
+            Assert.IsTrue(pm.IsExpirationValid);
+            Assert.AreEqual(defaultUpdatePayload.FirstName, pm.FirstName);
+            Assert.AreEqual(defaultUpdatePayload.LastName, pm.LastName);
+            Assert.AreEqual(defaultUpdatePayload.Address1, pm.Address1);
+            Assert.AreEqual(defaultUpdatePayload.Address2, pm.Address2);
+            Assert.AreEqual(defaultUpdatePayload.City, pm.City);
+            Assert.AreEqual(defaultUpdatePayload.State, pm.State);
+            Assert.AreEqual(defaultUpdatePayload.Zip, pm.Zip);
+            Assert.AreEqual(defaultUpdatePayload.CardNumber.Substring(defaultUpdatePayload.CardNumber.Length - 4), pm.LastFourDigits);
+            Assert.AreEqual(defaultUpdatePayload.ExpiryMonth, pm.ExpiryMonth);
+            Assert.AreEqual(defaultUpdatePayload.ExpiryYear, pm.ExpiryYear);
+        }
+        [Test]
+        public void S2SUpdateShouldBeSuccessfulPreservingSensitiveData()
+        {
+            var pm = TestHelper.CreatePaymentMethod(defaultPayload);
+            defaultUpdatePayload = defaultUpdatePayload.Merge(new PaymentMethodPayload(){
+                CardNumber = "****************",
+                Cvv = "***"
+            });
+            pm.UpdateAttributes(defaultUpdatePayload);
+        
+            Assert.IsTrue(pm.IsSensitiveDataValid);
+            Assert.IsTrue(pm.IsExpirationValid);
+            Assert.AreEqual(defaultUpdatePayload.FirstName, pm.FirstName);
+            Assert.AreEqual(defaultUpdatePayload.LastName, pm.LastName);
+            Assert.AreEqual(defaultUpdatePayload.Address1, pm.Address1);
+            Assert.AreEqual(defaultUpdatePayload.Address2, pm.Address2);
+            Assert.AreEqual(defaultUpdatePayload.City, pm.City);
+            Assert.AreEqual(defaultUpdatePayload.State, pm.State);
+            Assert.AreEqual(defaultUpdatePayload.Zip, pm.Zip);
+            Assert.AreEqual(defaultPayload.CardNumber.Substring(defaultPayload.CardNumber.Length - 4), pm.LastFourDigits);
+            Assert.AreEqual(defaultUpdatePayload.ExpiryMonth, pm.ExpiryMonth);
+            Assert.AreEqual(defaultUpdatePayload.ExpiryYear, pm.ExpiryYear);
+        }
+        
+        [Test]
+        public void S2SUpdateFailOnInputCardNumberShouldReturnTooShort()
+        {
+            var pm = TestHelper.CreatePaymentMethod(defaultPayload);
+            pm.UpdateAttributes(defaultPayload.Merge(new PaymentMethodPayload(){ CardNumber = "4111-1" }));
+        
+            Assert.IsFalse( pm.IsSensitiveDataValid );
+            Assert.AreEqual( new List<string>(){"The card number was too short."}, pm.Errors["input.card_number"] );
+        }
+        [Test]
+        public void S2SUpdateFailOnInputCardNumberShouldReturnTooLong()
+        {
+            var pm = TestHelper.CreatePaymentMethod(defaultPayload);
+            pm.UpdateAttributes(defaultPayload.Merge(new PaymentMethodPayload(){ CardNumber = "4111-1111-1111-1111-11" }));
+        
+            Assert.IsFalse( pm.IsSensitiveDataValid );
+            Assert.AreEqual( new List<string>(){"The card number was too long."}, pm.Errors["input.card_number"] );
+        }
+        [Test]
+        public void S2SUpdateFailOnInputCardNumberShouldReturnFailedChecksum()
+        {
+            var pm = TestHelper.CreatePaymentMethod(defaultPayload);
+            pm.UpdateAttributes(defaultPayload.Merge(new PaymentMethodPayload(){ CardNumber = "4111-1111-1111-1234" }));
+        
+            Assert.IsFalse( pm.IsSensitiveDataValid );
+            Assert.AreEqual( new List<string>(){"The card number was invalid."}, pm.Errors["input.card_number"] );
+        }
+        
+        [Test]
+        public void S2SUpdateFailOnInputCvvShouldReturnTooShort()
+        {
+            var pm = TestHelper.CreatePaymentMethod(defaultPayload);
+            pm.UpdateAttributes(defaultPayload.Merge(new PaymentMethodPayload(){ Cvv = "1" }));
+        
+            Assert.IsFalse( pm.IsSensitiveDataValid );
+            Assert.AreEqual( new List<string>(){"The CVV was too short."}, pm.Errors["input.cvv"] );
+        }
+        [Test]
+        public void S2SUpdateFailOnInputCvvShouldReturnTooLong()
+        {
+            var pm = TestHelper.CreatePaymentMethod(defaultPayload);
+            pm.UpdateAttributes(defaultPayload.Merge(new PaymentMethodPayload(){ Cvv = "111111" }));
+        
+            Assert.IsFalse( pm.IsSensitiveDataValid );
+            Assert.AreEqual( new List<string>(){"The CVV was too long."}, pm.Errors["input.cvv"] );
+        }
+        [Test]
+        public void S2SUpdateFailOnInputCvvShouldReturnNotNumeric()
+        {
+            var pm = TestHelper.CreatePaymentMethod(defaultPayload);
+            pm.UpdateAttributes(defaultPayload.Merge(new PaymentMethodPayload(){ Cvv = "abcd1" }));
+        
+            Assert.IsFalse( pm.IsSensitiveDataValid );
+            Assert.AreEqual( new List<string>(){"The CVV was invalid."}, pm.Errors["input.cvv"] );
+        }
+        
+        [Test]
+        public void S2SUpdateFailOnInputExpiryMonthShouldReturnIsInvalid()
+        {
+            var pm = TestHelper.CreatePaymentMethod(defaultPayload);
+            pm.UpdateAttributes(defaultPayload.Merge(new PaymentMethodPayload(){ ExpiryMonth = -1 }));
+        
+            Assert.IsTrue( pm.IsSensitiveDataValid );
+            Assert.IsFalse( pm.IsExpirationValid );
+            Assert.AreEqual( new List<string>(){"The expiration month was invalid."}, pm.Errors["input.expiry_month"] );
+        }
+        [Test]
+        public void S2SUpdateFailOnInputExpiryYearShouldReturnIsInvalid()
+        {
+            var pm = TestHelper.CreatePaymentMethod(defaultPayload);
+            pm.UpdateAttributes(defaultPayload.Merge(new PaymentMethodPayload(){ ExpiryYear = -1 }));
+        
+            Assert.IsTrue( pm.IsSensitiveDataValid );
+            Assert.IsFalse( pm.IsExpirationValid );
+            Assert.AreEqual( new List<string>(){"The expiration year was invalid."}, pm.Errors["input.expiry_year"] );
+        }
+        
+        [Test]
+        public void FindShouldBeSuccessful()
+        {
+            var pm = TestHelper.CreatePaymentMethod(defaultPayload);
+            pm = PaymentMethod.Find(pm.PaymentMethodToken);
+        
+            Assert.IsTrue(pm.IsSensitiveDataValid);
+            Assert.IsTrue(pm.IsExpirationValid);
+            Assert.AreEqual(defaultPayload.FirstName, pm.FirstName);
+            Assert.AreEqual(defaultPayload.LastName, pm.LastName);
+            Assert.AreEqual(defaultPayload.Address1, pm.Address1);
+            Assert.AreEqual(defaultPayload.Address2, pm.Address2);
+            Assert.AreEqual(defaultPayload.City, pm.City);
+            Assert.AreEqual(defaultPayload.State, pm.State);
+            Assert.AreEqual(defaultPayload.Zip, pm.Zip);
+            Assert.AreEqual(defaultPayload.CardNumber.Substring(defaultPayload.CardNumber.Length - 4), pm.LastFourDigits);
+            Assert.AreEqual(defaultPayload.ExpiryMonth, pm.ExpiryMonth);
+            Assert.AreEqual(defaultPayload.ExpiryYear, pm.ExpiryYear);
+        }
+        [Test]
+        public void FindShouldFailOnAnInvalidToken()
+        {
+            PaymentMethod pm = PaymentMethod.Find("abc123");
+            Assert.IsNull(pm);
+        }
         
     }
 }

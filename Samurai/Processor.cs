@@ -75,7 +75,7 @@ namespace Samurai
             request.AddBody(payload);
 
             // send a request and deserialize response into transaction
-            return Execute<Transaction>(request);
+            return Transaction.Execute(request);
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Samurai
             request.AddBody(payload);
 
             // send a request and deserialize response into transaction
-            return Execute<Transaction>(request);
+            return Transaction.Execute(request);
         }
     }
 }

@@ -135,11 +135,16 @@ namespace Samurai
         public string Country { get; set; }
 
         /// <summary>
+        /// Gets or sets sandbox.
+        /// </summary>
+        public bool Sandbox { get; set; }
+
+        /// <summary>
         /// Fetches payment method by its token.
         /// </summary>
         /// <param name="paymentMethodToken">Payment method token.</param>
         /// <returns>payment method with given token.</returns>
-        public static PaymentMethod Fetch(string paymentMethodToken)
+        public static PaymentMethod Find(string paymentMethodToken)
         {
             // create request
             var request = new RestRequest();
@@ -149,7 +154,45 @@ namespace Samurai
             // add token as an url parameter
             request.AddParameter("PaymentMethodToken", paymentMethodToken, ParameterType.UrlSegment);
 
-            return Execute(request);
+            var foundPM = Execute(request);
+            return (foundPM.Errors.ContainsKey("system.general")) ? null : foundPM;
+        }
+
+        /// <summary>
+        /// Update the payment method with the provided payload attributes
+        /// </summary>
+        /// <remarks>
+        /// This method will set the attributes of this payment method. It does not
+        /// persist those changes to the server.
+        /// </remarks>
+        public void SetAttributes(PaymentMethodPayload payload)
+        {
+            FirstName = payload.FirstName;
+            LastName = payload.LastName;
+            Address1 = payload.Address1;
+            Address2 = payload.Address2;
+            City = payload.City;
+            State = payload.State;
+            Zip = payload.Zip;
+            CardNumber = payload.CardNumber;
+            Cvv = payload.Cvv;
+            ExpiryMonth = payload.ExpiryMonth;
+            ExpiryYear = payload.ExpiryYear;
+            Custom = payload.Custom;
+            Sandbox = payload.Sandbox;
+        }
+
+        /// <summary>
+        /// Update the payment method with the provided payload attributes
+        /// </summary>
+        /// <remarks>
+        /// This method will set the attributes of this payment method.
+        /// It will also persist the new changes to the server.
+        /// </remarks>
+        public void UpdateAttributes(PaymentMethodPayload payload)
+        {
+            SetAttributes(payload);
+            Update();
         }
 
         /// <summary>
@@ -161,32 +204,25 @@ namespace Samurai
         /// payment method with the current payment method.
         /// </remarks>
         /// <returns>an updated payment method.</returns>
-        public PaymentMethod Update()
+        public void Update()
         {
-            // get old
-            var oldPM = Fetch(PaymentMethodToken);
-
             // create root element
             var root = new XElement("payment_method");
 
-            // add custom data if changed
-            if (Custom != oldPM.Custom) { root.Add(new XElement("custom", Custom)); }
-            // add name if changed
-            if (FirstName != oldPM.FirstName) { root.Add(new XElement("first_name", FirstName)); }
-            if (LastName != oldPM.LastName) { root.Add(new XElement("last_name", LastName)); }
-            // add street address if changed
-            if (Address1 != oldPM.Address1) { root.Add(new XElement("address_1", Address1)); }
-            if (Address2 != oldPM.Address2) { root.Add(new XElement("address_2", Address2)); }
-            // add address if changed
-            if (City != oldPM.City) { root.Add(new XElement("city", City)); }
-            if (State != oldPM.State) { root.Add(new XElement("state", State)); }
-            if (Zip != oldPM.Zip) { root.Add(new XElement("zip", Zip)); }
-            if (Country != oldPM.Country) { root.Add(new XElement("country", Country)); }
-            // add info about card type if changed
-            if (CardType != oldPM.CardType) { root.Add(new XElement("card_type", CardType)); }
-            // add expiring info if changed
-            if (ExpiryMonth != oldPM.ExpiryMonth) { root.Add(new XElement("expiry_month", ExpiryMonth)); }
-            if (ExpiryYear != oldPM.ExpiryYear) { root.Add(new XElement("expiry_year", ExpiryYear)); }
+            root.Add(new XElement("first_name", FirstName));
+            root.Add(new XElement("last_name", LastName));
+            root.Add(new XElement("address_1", Address1));
+            root.Add(new XElement("address_2", Address2));
+            root.Add(new XElement("city", City));
+            root.Add(new XElement("state", State));
+            root.Add(new XElement("zip", Zip));
+            root.Add(new XElement("country", Country));
+            root.Add(new XElement("card_number", CardNumber));
+            root.Add(new XElement("cvv", Cvv));
+            root.Add(new XElement("expiry_month", ExpiryMonth));
+            root.Add(new XElement("expiry_year", ExpiryYear));
+            root.Add(new XElement("custom", Custom));
+            root.Add(new XElement("sandbox", Sandbox));
 
             // create doc based on root element
             var doc = new XDocument(root);
@@ -202,7 +238,9 @@ namespace Samurai
             // add xml payload as a request body
             request.AddParameter("text/xml", doc.ToString(), ParameterType.RequestBody);
 
-            return Execute(request);
+            PaymentMethod newPM = Execute(request);
+            newPM.CopyPropertiesTo(this);
+            ProcessResponseErrors();
         }
 
         /// <summary>
@@ -269,7 +307,7 @@ namespace Samurai
             string pmToken = TokenizePaymentMethod(payload);
 
             // fetch it ny its token
-            PaymentMethod pm = PaymentMethod.Fetch(pmToken);
+            PaymentMethod pm = PaymentMethod.Find(pmToken);
 
             return pm;
         }

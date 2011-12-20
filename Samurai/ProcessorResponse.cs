@@ -29,5 +29,10 @@ namespace Samurai
         /// Gets or sets AVS result code.
         /// </summary>
         public string AvsResultCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets CVV result code.
+        /// </summary>
+        public string CvvResultCode { get; set; }
     }
 }

@@ -1,19 +1,18 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Samurai/XmlPayloads.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Samurai.NUnitTest/ProcessorTest.cs">
     <Files>
-      <File FileName="Samurai/PaymentMethod.cs" Line="271" Column="51" />
-      <File FileName="Samurai.NUnitTest/PaymentMethodTest.cs" Line="12" Column="1" />
-      <File FileName="Samurai.NUnitTest/ProcessorTest.cs" Line="1" Column="1" />
-      <File FileName="Samurai.NUnitTest/PurchaseTest.cs" Line="176" Column="8" />
-      <File FileName="Samurai/XmlPayloads.cs" Line="68" Column="4" />
+      <File FileName="Samurai.NUnitTest/ProcessorTest.cs" Line="79" Column="70" />
+      <File FileName="Samurai/Processor.cs" Line="35" Column="59" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Solution Items" expanded="True" />
-          <Node name="Samurai.Mono" expanded="True" selected="True" />
-          <Node name="Samurai.NUnitTest" expanded="True" />
+          <Node name="Samurai.Mono" expanded="True" />
+          <Node name="Samurai.NUnitTest" expanded="True">
+            <Node name="ProcessorTest.cs" selected="True" />
+          </Node>
         </State>
       </Pad>
       <Pad Id="ClassPad">
@@ -22,8 +21,21 @@
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State />
       </Pad>
+      <Pad Id="ConnectionManagerPad">
+        <State selected="True" />
+      </Pad>
       <Pad Id="MonoDevelop.NUnit.TestPad">
-        <State expanded="True" selected="True" />
+        <State expanded="True">
+          <Node name="Samurai.NUnitTest" expanded="True">
+            <Node name="Samurai" expanded="True">
+              <Node name="NUnitTest" expanded="True">
+                <Node name="ProcessorTest" expanded="True">
+                  <Node name="PurchaseShouldBeSuccessful" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

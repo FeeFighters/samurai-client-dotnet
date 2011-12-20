@@ -29,6 +29,10 @@ namespace Samurai
         /// </summary>
         public string Key { get; set; }
 
+        /// <summary>
+        /// Gets or sets the value, which represents the text node content of the XML serialization of this Message.
+        /// </summary>
+        public string Value { get; set; }
 
         public static readonly Dictionary<string, string> DefaultResponseMappings = new Dictionary<string, string>()
         {
@@ -98,7 +102,7 @@ namespace Samurai
             get {
                 if (string.IsNullOrWhiteSpace(_description)) {
                     var _key = Subclass + " " + Context + " " + Key;
-                    return DefaultResponseMappings.ContainsKey(_key) ? DefaultResponseMappings[_key] : "";
+                    return DefaultResponseMappings.ContainsKey(_key) ? DefaultResponseMappings[_key] : Value;
                 }
                 return _description;
             }

@@ -80,6 +80,12 @@ namespace Samurai
         public ProcessorResponse ProcessorResponse { get; set; }
 
         /// <summary>
+        /// Gets or sets a list of errors associated with this transaction.
+        /// </summary>
+        Dictionary<string, List<string>> _errors = new Dictionary<string, List<string>>();
+        public Dictionary<string, List<string>> Errors { get { return _errors; } }
+
+        /// <summary>
         /// Gets or sets payment method.
         /// </summary>
         public PaymentMethod PaymentMethod { get; set; }
@@ -89,7 +95,7 @@ namespace Samurai
         /// </summary>
         /// <param name="purchaseReferenceId">Transaction reference id.</param>
         /// <returns>a transaction with given reference id.</returns>
-        public static Transaction Fetch(string purchaseReferenceId)
+        public static Transaction Find(string purchaseReferenceId)
         {
             // create a request
             var request = new RestRequest();
@@ -99,7 +105,7 @@ namespace Samurai
             // add reference is as an url parameter
             request.AddParameter("ReferenceID", purchaseReferenceId, ParameterType.UrlSegment);
 
-            return Execute<Transaction>(request);
+            return Execute(request);
         }
 
         /// <summary>
@@ -143,7 +149,7 @@ namespace Samurai
             // add payload as a request body
             request.AddParameter("text/xml", payload, ParameterType.RequestBody);
 
-            return Execute<Transaction>(request);
+            return Execute(request);
         }
 
         /// <summary>
@@ -161,7 +167,7 @@ namespace Samurai
             // add processor token as an url parameter
             request.AddParameter("TransactionToken", TransactionToken, ParameterType.UrlSegment);
 
-            return Execute<Transaction>(request);
+            return Execute(request);
         }
 
         /// <summary>
@@ -187,7 +193,7 @@ namespace Samurai
             // add payload as a request body
             request.AddParameter("text/xml", payload, ParameterType.RequestBody);
 
-            return Execute<Transaction>(request);
+            return Execute(request);
         }
         
         /// <summary>
@@ -213,7 +219,36 @@ namespace Samurai
             // add payload as a request body
             request.AddParameter("text/xml", payload, ParameterType.RequestBody);
 
-            return Execute<Transaction>(request);
-        }        
+            return Execute(request);
+        }
+
+        public bool Success()
+        {
+            return ProcessorResponse == null ? false : ProcessorResponse.Success;
+        }
+
+        public static Transaction Execute(RestRequest request)
+        {
+            var transaction = Execute<Transaction>(request);
+            transaction.ProcessResponseErrors();
+            return transaction;
+        }
+
+        protected void ProcessResponseErrors()
+        {
+            var messages = new List<Message>();
+            messages.AddRange(PaymentMethod.Messages);
+            messages.AddRange(ProcessorResponse.Messages);
+
+            // Sort the messages so that more-critical/relevant ones appear first, since only the first error is added to a field
+            messages.Sort(new MessageComparer());
+
+            foreach (Message message in messages)
+            {
+                if (!Errors.ContainsKey(message.Context) || Errors[message.Context].Count == 0) {
+                    Errors.Add(message.Context, new List<string>() {message.Description});
+                }
+            }
+        }
     }
 }

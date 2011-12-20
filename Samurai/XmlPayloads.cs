@@ -69,6 +69,25 @@ namespace Samurai
     [SerializeAs(Name = "payment_method")]
     public class PaymentMethodPayload
     {
+        public PaymentMethodPayload() {}
+
+        public PaymentMethodPayload(PaymentMethod pm)
+        {
+            FirstName = pm.FirstName;
+            LastName = pm.LastName;
+            Address1 = pm.Address1;
+            Address2 = pm.Address2;
+            City = pm.City;
+            State = pm.State;
+            Zip = pm.Zip;
+            CardNumber = pm.CardNumber;
+            Cvv = pm.Cvv;
+            ExpiryMonth = pm.ExpiryMonth;
+            ExpiryYear = pm.ExpiryYear;
+            Custom = pm.Custom;
+            Sandbox = pm.Sandbox;
+        }
+
         [SerializeAs(Name = "first_name")]
         public string FirstName {get;set;}
 
