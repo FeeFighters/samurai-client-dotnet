@@ -6,13 +6,10 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Samurai")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyDescription("FeeFighters Samurai API Client Library https://samurai.feefighters.com/developers/dotnet")]
 [assembly: AssemblyCompany("FeeFighters")]
 [assembly: AssemblyProduct("Samurai")]
 [assembly: AssemblyCopyright("Copyright © 2011")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -28,4 +25,4 @@ using System.Runtime.InteropServices;
 //      Minor Version 
 //      Build Number
 //      Revision
-[assembly: AssemblyVersion("1.1.0.0")]
+[assembly: AssemblyVersion("1.1.0.2")]
