@@ -1,25 +1,27 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Samurai.NUnitTest/ProcessorTest.cs">
-    <Files>
-      <File FileName="Samurai.NUnitTest/ProcessorTest.cs" Line="79" Column="70" />
-      <File FileName="Samurai/Processor.cs" Line="35" Column="59" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Solution Items" expanded="True" />
-          <Node name="Samurai.Mono" expanded="True" />
-          <Node name="Samurai.NUnitTest" expanded="True">
-            <Node name="ProcessorTest.cs" selected="True" />
+          <Node name="Samurai.Mono" expanded="True">
+            <Node name="Properties" expanded="True">
+              <Node name="AssemblyInfo.cs" selected="True" />
+            </Node>
           </Node>
+          <Node name="Samurai.NUnitTest" expanded="True" />
         </State>
       </Pad>
       <Pad Id="ClassPad">
         <State expanded="True" selected="True" />
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
+        <State>
+          <Value>foundPM.Errors.ContainsKey("system.general")</Value>
+          <Value>foundPM.Errors.ContainsKey("system.general") &amp;&amp; foundPM.Errors["system.general"][0] == "default"</Value>
+          <Value>foundPM.Errors["system.general"][0]</Value>
+        </State>
       </Pad>
       <Pad Id="ConnectionManagerPad">
         <State selected="True" />
@@ -29,9 +31,11 @@
           <Node name="Samurai.NUnitTest" expanded="True">
             <Node name="Samurai" expanded="True">
               <Node name="NUnitTest" expanded="True">
+                <Node name="PaymentMethodTest" expanded="True" />
                 <Node name="ProcessorTest" expanded="True">
-                  <Node name="PurchaseShouldBeSuccessful" selected="True" />
+                  <Node name="AuthorizeAvsResponsesShouldReturnProcessorAvsResultCodeN" selected="True" />
                 </Node>
+                <Node name="TransactionTest" expanded="True" />
               </Node>
             </Node>
           </Node>
@@ -40,7 +44,9 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/krall/Programming/samurai-client-dotnet/Samurai/Processor.cs" line="120" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
