@@ -24,6 +24,7 @@ namespace Samurai
             // set up client
             var client = new RestClient();
             client.BaseUrl = Samurai.Site;
+            client.UserAgent = "FeeFighters Samurai .NET Client v"+Samurai.Version;
             client.Authenticator = new HttpBasicAuthenticator(Samurai.MerchantKey, Samurai.MerchantPassword);
 
             // get response

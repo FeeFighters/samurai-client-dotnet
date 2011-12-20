@@ -253,7 +253,8 @@ namespace Samurai
             // client for creating
             var client = new RestClient();
             client.BaseUrl = Samurai.Site;
-            
+            client.UserAgent = "FeeFighters Samurai .NET Client v"+Samurai.Version;
+
             // create post-request 
             var request = new RestRequest(Method.POST);
             request.Timeout = int.MaxValue;

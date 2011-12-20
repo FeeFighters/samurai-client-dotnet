@@ -68,5 +68,12 @@ namespace Samurai
                 return _options.Debug;
             }
         }
+
+        public static string Version
+        {
+            get {
+                return _options.GetType().Assembly.GetName().Version.ToString();
+            }
+        }
     }
 }
