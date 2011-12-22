@@ -66,14 +66,18 @@ namespace Samurai.NUnitTest
             var transaction = Processor.TheProcessor.Purchase(defaultPaymentMethod.PaymentMethodToken,
                                                               "100.0",
                                                               new TransactionPayload() {
-                                                                Descriptor = "descriptor",
+                                                                Description = "description",
+                                                                DescriptorName = "descriptor_name",
+                                                                DescriptorPhone = "descriptor_phone",
                                                                 Custom = "custom_data",
                                                                 BillingReference = "ABC123"+rand,
                                                                 CustomerReference = "Customer (123)"
                                                               });
 
             Assert.IsTrue( transaction.Success() );
-            Assert.AreEqual("descriptor", transaction.Descriptor);
+            Assert.AreEqual("description", transaction.Description);
+            Assert.AreEqual("descriptor_name", transaction.DescriptorName);
+            Assert.AreEqual("descriptor_phone", transaction.DescriptorPhone);
             Assert.AreEqual("custom_data", transaction.Custom);
             Assert.AreEqual("ABC123"+rand, transaction.BillingReference);
             Assert.AreEqual("Customer (123)", transaction.CustomerReference);
@@ -170,14 +174,18 @@ namespace Samurai.NUnitTest
             var transaction = Processor.TheProcessor.Authorize(defaultPaymentMethod.PaymentMethodToken,
                                                                "100.0",
                                                                new TransactionPayload() {
-                                                                 Descriptor = "descriptor",
+                                                                 Description = "description",
+                                                                 DescriptorName = "descriptor_name",
+                                                                 DescriptorPhone = "descriptor_phone",
                                                                  Custom = "custom_data",
                                                                  BillingReference = "ABC123"+rand,
                                                                  CustomerReference = "Customer (123)"
                                                                });
 
             Assert.IsTrue( transaction.Success() );
-            Assert.AreEqual("descriptor", transaction.Descriptor);
+            Assert.AreEqual("description", transaction.Description);
+            Assert.AreEqual("descriptor_name", transaction.DescriptorName);
+            Assert.AreEqual("descriptor_phone", transaction.DescriptorPhone);
             Assert.AreEqual("custom_data", transaction.Custom);
             Assert.AreEqual("ABC123"+rand, transaction.BillingReference);
             Assert.AreEqual("Customer (123)", transaction.CustomerReference);

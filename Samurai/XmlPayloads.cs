@@ -41,8 +41,20 @@ namespace Samurai
         /// <summary>
         /// Gets or sets descriptor for the transaction.
         /// </summary>
-        [SerializeAs(Name = "descriptor")]
-        public string Descriptor { get; set; }
+        [SerializeAs(Name = "description")]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets dynamic descriptor name for the transaction.
+        /// </summary>
+        [SerializeAs(Name = "descriptor_name")]
+        public string DescriptorName { get; set; }
+
+        /// <summary>
+        /// Gets or sets dynamic descriptor phone for the transaction.
+        /// </summary>
+        [SerializeAs(Name = "descriptor_phone")]
+        public string DescriptorPhone { get; set; }
 
         /// <summary>
         /// Gets or sets custom data, this data does not get passed to the processor, 

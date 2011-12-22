@@ -27,9 +27,19 @@ namespace Samurai
         public DateTime CreatedAt { get; set; }
 
         /// <summary>
-        /// Gets or sets descriptor.
+        /// Gets or sets description.
         /// </summary>
-        public string Descriptor { get; set; }
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets dynamic descriptor name.
+        /// </summary>
+        public string DescriptorName { get; set; }
+
+        /// <summary>
+        /// Gets or sets dynamic descriptor phone.
+        /// </summary>
+        public string DescriptorPhone { get; set; }
 
         /// <summary>
         /// Gets or sets custom data.

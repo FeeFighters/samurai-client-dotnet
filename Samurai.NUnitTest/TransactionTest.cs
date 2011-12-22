@@ -166,7 +166,9 @@ namespace Samurai.NUnitTest
 
             Assert.AreEqual(t.TransactionToken.ToLower(), t_ref.TransactionToken.ToLower());
             Assert.AreEqual(t.ReferenceId.ToLower(), t_ref.ReferenceId.ToLower());
-            Assert.AreEqual(t.Descriptor, String.Empty);
+            Assert.AreEqual(t.Description, String.Empty);
+            Assert.AreEqual(t.DescriptorName, String.Empty);
+            Assert.AreEqual(t.DescriptorPhone, String.Empty);
             Assert.AreEqual(t.Custom, String.Empty);
             Assert.AreEqual(t.BillingReference, String.Empty);
             Assert.AreEqual(t.CustomerReference, String.Empty);

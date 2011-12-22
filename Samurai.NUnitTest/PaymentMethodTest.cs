@@ -249,15 +249,6 @@ namespace Samurai.NUnitTest
             Assert.IsFalse( pm.IsSensitiveDataValid );
             Assert.AreEqual( new List<string>(){"The CVV was too long."}, pm.Errors["input.cvv"] );
         }
-        [Test]
-        public void S2SUpdateFailOnInputCvvShouldReturnNotNumeric()
-        {
-            var pm = TestHelper.CreatePaymentMethod(defaultPayload);
-            pm.UpdateAttributes(defaultPayload.Merge(new PaymentMethodPayload(){ Cvv = "abcd1" }));
-        
-            Assert.IsFalse( pm.IsSensitiveDataValid );
-            Assert.AreEqual( new List<string>(){"The CVV was invalid."}, pm.Errors["input.cvv"] );
-        }
         
         [Test]
         public void S2SUpdateFailOnInputExpiryMonthShouldReturnIsInvalid()
